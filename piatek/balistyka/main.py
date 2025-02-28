@@ -5,6 +5,13 @@ IMPACT_RADIUS = 5
 ROWS=6
 COLS=10
 
+def draw_scene_adjusted(x, y):
+    aspect_ratio = COLS / DISTANCE
+
+    x_t = x * aspect_ratio
+    y_t = ROWS  - (y * aspect_ratio / 2)
+
+    draw_scene(round(x_t), round(y_t))
 
 def draw_scene(x,y):
     for _ in range(y-1):
@@ -15,7 +22,7 @@ def draw_scene(x,y):
     for _ in range(y,ROWS-1):
         print()
     for _ in range(COLS):
-        print("_",end="")
+        print("‾",end="")
 
 
 def get_input():
@@ -51,5 +58,5 @@ def main():
 
 if __name__ == '__main__':
     #    main()
-    draw_scene(2,3)
+    draw_scene_adjusted(100,100)
 
