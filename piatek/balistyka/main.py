@@ -1,9 +1,31 @@
 from math import sin, radians, cos
+from time import sleep
+import os
+
 GRAVITY = 9.81
 DISTANCE = 100
 IMPACT_RADIUS = 5
-ROWS=6
-COLS=10
+ROWS=80
+COLS=24
+
+def animate_shot(velocity, angle):
+    t_c = 2* velocity * sin(angle) / GRAVITY
+    d_t = 0.05
+    v_x = velocity * cos(angle)
+    v_y = velocity * sin(angle)
+    t = 0
+    while t < t_c:
+        x = v_x * t
+        y = v_y * t - GRAVITY * t**2 / 2
+
+        draw_scene_adjusted(x, y)
+        t += d_t
+        sleep(d_t)
+        clear()
+
+
+def clear():
+    os.system("clear")
 
 def draw_scene_adjusted(x, y):
     aspect_ratio = COLS / DISTANCE
@@ -14,7 +36,7 @@ def draw_scene_adjusted(x, y):
     draw_scene(round(x_t), round(y_t))
 
 def draw_scene(x,y):
-    for _ in range(y-1):
+    for _ in range(y-2):
         print()
     for _ in range(x-1):
         print(" ",end="")
@@ -47,6 +69,7 @@ def main():
         z=calculate_impact(angle, velocity)
         print(z)
         # if player==1:
+        animate_shot(velocity, angle)
         if check_victory(DISTANCE,z):
             break
         # else:
@@ -57,6 +80,6 @@ def main():
     print(f"Zwyciężył gracz {player}")
 
 if __name__ == '__main__':
-    #    main()
-    draw_scene_adjusted(100,100)
+    main()
+    #draw_scene_adjusted(100,100)
 
