@@ -18,18 +18,30 @@ def show_title_screen(stdscr, rows, cols):
     stdscr.refresh()
     stdscr.getch()
 
-def draw_map(strscr, rows, cols, structures):
+def draw_map(stdscr, rows, cols, structures):
     # for structure in structures:
     #     y,x = structure
-    #     strscr.addstr(y,x,'*')
-    #     #strscr.addstr(structure[0], structure[1],'*')
+    #     stdscr.addstr(y,x,'*')
+    #     #stdscr.addstr(structure[0], structure[1],'*')
+    global barracks
+    for i, line in enumerate(barracks[1]):
+        stdscr.addstr(i, 0, line)
     for y, x in structures:
-        strscr.addstr(y,x,'*')
+        stdscr.addstr(y,x,'*')
+
 
 def add_structure(structures, y, x, rows):
     max_y = rows - (PANEL_HEIGHT + 1)
     if y < max_y:
         structures.append((y, x))
+
+def load_structure_from_file(path):
+    with open(path) as fd:
+        lines = fd.read().splitlines()
+        name, image = lines[0], lines[1:]
+        return name, image
+
+barracks = load_structure_from_file('structures/barracks.txt')
 
 def main(stdscr):
     curses.curs_set(0)
@@ -40,7 +52,7 @@ def main(stdscr):
     # stdscr.addstr(5, 10, f"* {height}x{width} *")
     show_title_screen(stdscr, height, width)
     stdscr.clear()
-    structures = [(3,8), (7,10), (15, 20)]
+    structures = []
     while True:
         draw_map(stdscr, height, width, structures)
         draw_separator(stdscr, height, width)
