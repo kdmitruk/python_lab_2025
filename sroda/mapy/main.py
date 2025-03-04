@@ -26,8 +26,10 @@ def draw_map(strscr, rows, cols, structures):
     for y, x in structures:
         strscr.addstr(y,x,'*')
 
-def add_structure(structures, y, x):
-    structures.append((y, x))
+def add_structure(structures, y, x, rows):
+    max_y = rows - (PANEL_HEIGHT + 1)
+    if y < max_y:
+        structures.append((y, x))
 
 def main(stdscr):
     curses.curs_set(0)
@@ -48,7 +50,7 @@ def main(stdscr):
         if key == curses.KEY_MOUSE:
             _, x, y, _, bstate = curses.getmouse()
             if bstate & curses.BUTTON1_CLICKED:
-                add_structure(structures, y, x)
+                add_structure(structures, y, x, height)
 
 if __name__ == '__main__':
     curses.wrapper(main)
