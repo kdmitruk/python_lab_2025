@@ -28,13 +28,16 @@ def draw_map(stdscr, rows, cols, structures):
     #     stdscr.addstr(i, 0, line)
     for y, x in structures:
         # stdscr.addstr(y,x,'*')
-        draw_structure(stdscr,x,y,barracks)
+        draw_structure(stdscr,x,y,barracks,centered = True, labeled = True, highlighted=True)
 
-def draw_structure(stdscr,x,y,structure):
+def draw_structure(stdscr,x,y,structure,centered = False, labeled = False, highlighted = False):
     name, art = structure
     offset_y = y - len(art)
+    offset_x = x - len(art[0])//2 if centered else x
     for i, line in enumerate(art):
-        stdscr.addstr(offset_y+i, x, line)
+        stdscr.addstr(offset_y+i, offset_x, line, curses.color_pair(1 if highlighted else 0))
+    if labeled:
+        stdscr.addstr(offset_y + len(art)+1,offset_x,name,curses.color_pair(1 if highlighted else 0))
 
 def add_structure(structures, y, x, rows):
     max_y = rows - (PANEL_HEIGHT + 1)
@@ -50,6 +53,8 @@ def load_structure_from_file(path):
 barracks = load_structure_from_file('structures/barracks.txt')
 
 def main(stdscr):
+    curses.start_color()
+    curses.init_pair(1,curses.COLOR_YELLOW, curses.COLOR_BLACK)
     curses.curs_set(0)
     curses.mousemask(curses.ALL_MOUSE_EVENTS | curses.REPORT_MOUSE_POSITION)
 
