@@ -1,5 +1,14 @@
 import curses
 
+PANEL_HEIGHT = 10
+
+def draw_separator(stdscr, rows, cols):
+    y = rows - (PANEL_HEIGHT + 1)
+    # stdscr.hline(y, 0, '-', cols)
+    stdscr.addstr(y, 0, '-' * cols)
+    stdscr.refresh()
+    stdscr.getch()
+
 def show_title_screen(stdscr, rows, cols):
     contents = ["Map maker", "version 1.0", "", "Naciśnij dowolny klawisz aby kontynuować"]
     offset_y = (rows - len(contents)) // 2
@@ -8,6 +17,7 @@ def show_title_screen(stdscr, rows, cols):
         x = (cols - len(line)) // 2
         stdscr.addstr(y, x, line)
     stdscr.refresh()
+    stdscr.getch()
 
 def main(stdscr):
     curses.curs_set(0)
@@ -17,8 +27,9 @@ def main(stdscr):
     stdscr.clear()
     # stdscr.addstr(5, 10, f"* {height}x{width} *")
     show_title_screen(stdscr, height, width)
+    stdscr.clear()
+    draw_separator(stdscr, height, width)
     # stdscr.refresh()
-    stdscr.getch()
 
 
 if __name__ == '__main__':
