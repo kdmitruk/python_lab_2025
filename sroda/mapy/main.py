@@ -24,11 +24,17 @@ def draw_map(stdscr, rows, cols, structures):
     #     stdscr.addstr(y,x,'*')
     #     #stdscr.addstr(structure[0], structure[1],'*')
     global barracks
-    for i, line in enumerate(barracks[1]):
-        stdscr.addstr(i, 0, line)
+    # for i, line in enumerate(barracks[1]):
+    #     stdscr.addstr(i, 0, line)
     for y, x in structures:
-        stdscr.addstr(y,x,'*')
+        # stdscr.addstr(y,x,'*')
+        draw_structure(stdscr,x,y,barracks)
 
+def draw_structure(stdscr,x,y,structure):
+    name, art = structure
+    offset_y = y - len(art)
+    for i, line in enumerate(art):
+        stdscr.addstr(offset_y+i, x, line)
 
 def add_structure(structures, y, x, rows):
     max_y = rows - (PANEL_HEIGHT + 1)
