@@ -2,6 +2,9 @@ import curses
 
 PANEL_HEIGHT = 10
 
+def add_structure(structures, y, x):
+    structures.append((y,x))
+
 def draw_map(stdscr, structures):
     for y, x in structures:
         stdscr.addstr(y, x, "*")
@@ -33,8 +36,13 @@ def main(stdscr):
     height, width = stdscr.getmaxyx()
     stdscr.clear()
     show_title_screen(stdscr,height,width)
-    draw_scene(stdscr, structures, height, width)
-    stdscr.getch()
+    while True:
+        draw_scene(stdscr, structures, height, width)
+        ch = stdscr.getch()
+        if ch == curses.KEY_MOUSE:
+            _, x, y, _, bstate = curses.getmouse()
+            if bstate & curses.BUTTON1_CLICKED:
+                add_structure(structures, y, x)
 
 
 if __name__ == '__main__':
