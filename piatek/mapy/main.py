@@ -2,8 +2,11 @@ import curses
 
 PANEL_HEIGHT = 10
 
-def add_structure(structures, y, x):
-    structures.append((y,x))
+def add_structure(structures, y, x,height):
+    y_max = height - PANEL_HEIGHT - 1
+    if y<y_max:
+        structures.append((y,x))
+
 
 def draw_map(stdscr, structures):
     for y, x in structures:
@@ -42,7 +45,7 @@ def main(stdscr):
         if ch == curses.KEY_MOUSE:
             _, x, y, _, bstate = curses.getmouse()
             if bstate & curses.BUTTON1_CLICKED:
-                add_structure(structures, y, x)
+                add_structure(structures, y, x,height)
 
 
 if __name__ == '__main__':
