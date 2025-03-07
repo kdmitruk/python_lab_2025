@@ -2,6 +2,17 @@ import curses
 
 PANEL_HEIGHT = 10
 
+def load_structure_from_file(src):
+    with open(src) as file:
+        lines = file.read()
+        lines = lines.splitlines()
+        return lines[0], lines[1:]
+
+def draw_structure(stdscr, structure):
+    name, art = structure
+    for i, line in enumerate(art):
+        stdscr.addstr(i,0,line)
+
 def add_structure(structures, y, x,height):
     y_max = height - PANEL_HEIGHT - 1
     if y<y_max:
@@ -30,6 +41,8 @@ def show_title_screen(stdscr,height,width):
         x=(width-len(contents[i]))//2
         stdscr.addstr(y+i, x, contents[i])
 
+    barracks = load_structure_from_file("structures/barracks.txt")
+    draw_structure(stdscr,barracks)
     stdscr.getch()
 
 def main(stdscr):
