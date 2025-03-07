@@ -1,6 +1,7 @@
 import curses
 
 PANEL_HEIGHT = 10
+barracks = None
 
 def load_structure_from_file(src):
     with open(src) as file:
@@ -28,8 +29,9 @@ def add_structure(structures, y, x,height):
 
 
 def draw_map(stdscr, structures):
+    global barracks
     for y, x in structures:
-        stdscr.addstr(y, x, "*")
+        draw_structure(stdscr,barracks,x,y,centered=True)
 
 
 def draw_separator(stdscr,height,width):
@@ -49,12 +51,14 @@ def show_title_screen(stdscr,height,width):
         x=(width-len(contents[i]))//2
         stdscr.addstr(y+i, x, contents[i])
 
-    barracks = load_structure_from_file("structures/barracks.txt")
     draw_structure(stdscr,barracks, 10, 10)
     draw_structure(stdscr,barracks, 10, 15, labeled = True, highlighted=True)
     stdscr.getch()
 
 def main(stdscr):
+    global barracks
+    barracks = load_structure_from_file("structures/barracks.txt")
+
     curses.start_color()
     curses.init_pair(1,curses.COLOR_YELLOW,curses.COLOR_BLACK)
     curses.curs_set(0)
