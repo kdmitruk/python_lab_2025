@@ -8,10 +8,18 @@ def load_structure_from_file(src):
         lines = lines.splitlines()
         return lines[0], lines[1:]
 
-def draw_structure(stdscr, structure):
+def draw_structure(stdscr, structure, x, y, centered = False, labeled = False, highlighted = False):
     name, art = structure
+    y -= len(art)
+    color = curses.color_pair(1 if highlighted else 0)
+    if centered:
+        x -= len(art[0]) // 2
+
     for i, line in enumerate(art):
-        stdscr.addstr(i,0,line)
+        stdscr.addstr(i + y,x,line, color | curses.A_BOLD)
+
+    if labeled:
+        stdscr.addstr(y+len(art), x, name, color | curses.A_BOLD)
 
 def add_structure(structures, y, x,height):
     y_max = height - PANEL_HEIGHT - 1
@@ -42,10 +50,13 @@ def show_title_screen(stdscr,height,width):
         stdscr.addstr(y+i, x, contents[i])
 
     barracks = load_structure_from_file("structures/barracks.txt")
-    draw_structure(stdscr,barracks)
+    draw_structure(stdscr,barracks, 10, 10)
+    draw_structure(stdscr,barracks, 10, 15, labeled = True, highlighted=True)
     stdscr.getch()
 
 def main(stdscr):
+    curses.start_color()
+    curses.init_pair(1,curses.COLOR_YELLOW,curses.COLOR_BLACK)
     curses.curs_set(0)
     curses.mousemask(curses.ALL_MOUSE_EVENTS | curses.REPORT_MOUSE_POSITION)
     structures = [(10, 5), (8,9), (15, 20)]
