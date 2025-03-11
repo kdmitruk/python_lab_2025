@@ -12,10 +12,11 @@ def show_title_screen(stdscr, rows, cols):
     stdscr.refresh()
     stdscr.getch()
 
-def draw_map(stdscr, rows, cols, structures):
-    global barracks
-    for y, x in structures:
-        draw_structure(stdscr,x,y,barracks,centered = True)
+def draw_map(stdscr, rows, cols, structures, available_structures, active_structure):
+    stdscr.clear()
+    stdscr.addstr(rows-1, 0, list(available_structures.keys())[active_structure])
+    # for y, x in structures:
+    #     draw_structure(stdscr,x,y,barracks,centered = True)
 
 def draw_structure(stdscr,x,y,structure,centered = False, labeled = False, highlighted = False):
     name, art = structure
@@ -46,10 +47,6 @@ def load_stuctures_from_directory():
         result[stucture[0]] = stucture
     return result
 
-
-
-barracks = load_structure_from_file('structures/barracks.txt')
-
 def main(stdscr):
     curses.start_color()
     curses.init_pair(1,curses.COLOR_YELLOW, curses.COLOR_BLACK)
@@ -62,8 +59,11 @@ def main(stdscr):
     show_title_screen(stdscr, height, width)
     stdscr.clear()
     structures = []
+    available_structures = load_stuctures_from_directory()
+    active_structure = 0
+
     while True:
-        draw_map(stdscr, height, width, structures)
+        draw_map(stdscr, height, width, structures, available_structures, active_structure)
         stdscr.refresh()
 
         key = stdscr.getch()
@@ -71,7 +71,15 @@ def main(stdscr):
             _, x, y, _, bstate = curses.getmouse()
             if bstate & curses.BUTTON1_CLICKED:
                 add_structure(structures, y, x, height)
+        elif key == ord("q"):
+            return
+        elif key in range(ord("1"), ord("4")+1):
+            active_structure = key - ord("1")
+
+        stdscr.addstr(0, 0, str(key))
+
+
 
 if __name__ == '__main__':
-    #curses.wrapper(main)
-    print(load_stuctures_from_directory())
+    curses.wrapper(main)
+    #print(load_stuctures_from_directory())
