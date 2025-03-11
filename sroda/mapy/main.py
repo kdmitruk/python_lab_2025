@@ -15,8 +15,9 @@ def show_title_screen(stdscr, rows, cols):
 def draw_map(stdscr, rows, cols, structures, available_structures, active_structure):
     stdscr.clear()
     stdscr.addstr(rows-1, 0, list(available_structures.keys())[active_structure])
-    # for y, x in structures:
-    #     draw_structure(stdscr,x,y,barracks,centered = True)
+    for y, x, name in structures:
+        structure = available_structures[name]
+        draw_structure(stdscr,x,y,structure,centered = True)
 
 def draw_structure(stdscr,x,y,structure,centered = False, labeled = False, highlighted = False):
     name, art = structure
@@ -27,8 +28,9 @@ def draw_structure(stdscr,x,y,structure,centered = False, labeled = False, highl
     if labeled:
         stdscr.addstr(offset_y + len(art)+1,offset_x,name,curses.color_pair(1 if highlighted else 0))
 
-def add_structure(structures, y, x, rows):
-    structures.append((y, x))
+def add_structure(structures, y, x, available_structures, active_structure):
+    name = list(available_structures.keys())[active_structure]
+    structures.append((y, x, name))
 
 def load_structure_from_file(path):
     with open(path) as fd:
@@ -70,7 +72,7 @@ def main(stdscr):
         if key == curses.KEY_MOUSE:
             _, x, y, _, bstate = curses.getmouse()
             if bstate & curses.BUTTON1_CLICKED:
-                add_structure(structures, y, x, height)
+                add_structure(structures, y, x, available_structures, active_structure)
         elif key == ord("q"):
             return
         elif key in range(ord("1"), ord("4")+1):
