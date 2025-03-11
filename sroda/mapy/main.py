@@ -1,4 +1,6 @@
 import curses
+import os
+
 
 def show_title_screen(stdscr, rows, cols):
     contents = ["Map maker", "version 1.0", "", "Naciśnij dowolny klawisz aby kontynuować"]
@@ -32,6 +34,19 @@ def load_structure_from_file(path):
         lines = fd.read().splitlines()
         name, image = lines[0], lines[1:]
         return name, image
+def load_stuctures_from_directory():
+    path = "structures"
+    dir_list = os.listdir(path)
+    #print(dir_list)
+    result = {}
+
+    for file_name in dir_list:
+        file_path = os.path.join(path,file_name)
+        stucture = load_structure_from_file(file_path)
+        result[stucture[0]] = stucture
+    return result
+
+
 
 barracks = load_structure_from_file('structures/barracks.txt')
 
@@ -58,4 +73,5 @@ def main(stdscr):
                 add_structure(structures, y, x, height)
 
 if __name__ == '__main__':
-    curses.wrapper(main)
+    #curses.wrapper(main)
+    print(load_stuctures_from_directory())
