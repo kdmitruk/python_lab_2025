@@ -1,9 +1,19 @@
 import curses
+import os
 
 barracks = None
 
-def load_structure_from_file(src):
-    with open(src) as file:
+def load_structure_from_directory(path):
+    file_names=os.listdir(path)
+    structures={}
+    for file_name in file_names:
+        file_path=os.path.join(path,file_name)
+        structure=load_structure_from_file(file_path)
+        structures[structure[0]]=structure
+    return structures
+
+def load_structure_from_file(path):
+    with open(path) as file:
         lines = file.read()
         lines = lines.splitlines()
         return lines[0], lines[1:]
@@ -46,7 +56,7 @@ def show_title_screen(stdscr,height,width):
 def main(stdscr):
     global barracks
     barracks = load_structure_from_file("structures/barracks.txt")
-
+    available_structures=load_structure_from_directory('structures')
     curses.start_color()
     curses.init_pair(1,curses.COLOR_YELLOW,curses.COLOR_BLACK)
     curses.curs_set(0)
