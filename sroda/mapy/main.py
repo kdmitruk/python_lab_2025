@@ -1,6 +1,7 @@
 import curses
 import os
-
+import pickle
+import sys
 
 def show_title_screen(stdscr, rows, cols):
     contents = ["Map maker", "version 1.0", "", "Naciśnij dowolny klawisz aby kontynuować"]
@@ -49,6 +50,17 @@ def load_stuctures_from_directory():
         result[stucture[0]] = stucture
     return result
 
+def save_map(structures):
+    file = open("map.bin", "wb")
+    pickle.dump(structures,file)
+    file.close()
+
+def load_map(path):
+    file = open(path,"rb")
+    structures = pickle.load(file)
+    file.close()
+    return structures
+
 def main(stdscr):
     curses.start_color()
     curses.init_pair(1,curses.COLOR_YELLOW, curses.COLOR_BLACK)
@@ -64,6 +76,9 @@ def main(stdscr):
     available_structures = load_stuctures_from_directory()
     active_structure = 0
 
+    if len(sys.argv) == 2:
+        structures = load_map(sys.argv[1])
+
     while True:
         draw_map(stdscr, height, width, structures, available_structures, active_structure)
         stdscr.refresh()
@@ -75,6 +90,8 @@ def main(stdscr):
                 add_structure(structures, y, x, available_structures, active_structure)
         elif key == ord("q"):
             return
+        elif key == ord("s"):
+            save_map(structures)
         elif key in range(ord("1"), ord("4")+1):
             active_structure = key - ord("1")
 

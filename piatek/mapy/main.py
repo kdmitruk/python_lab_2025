@@ -1,6 +1,5 @@
 import curses
 
-PANEL_HEIGHT = 10
 barracks = None
 
 def load_structure_from_file(src):
@@ -23,24 +22,15 @@ def draw_structure(stdscr, structure, x, y, centered = False, labeled = False, h
         stdscr.addstr(y+len(art), x, name, color | curses.A_BOLD)
 
 def add_structure(structures, y, x,height):
-    y_max = height - PANEL_HEIGHT - 1
-    if y<y_max:
-        structures.append((y,x))
-
+    structures.append((y,x))
 
 def draw_map(stdscr, structures):
     global barracks
     for y, x in structures:
         draw_structure(stdscr,barracks,x,y,centered=True)
 
-
-def draw_separator(stdscr,height,width):
-    separator_y = height - PANEL_HEIGHT - 1
-    stdscr.addstr(separator_y, 0, '-' * width)
-
 def draw_scene(stdscr, structures, height, width):
     stdscr.clear()
-    draw_separator(stdscr, height, width)
     draw_map(stdscr, structures)
     stdscr.refresh()
 
@@ -51,8 +41,6 @@ def show_title_screen(stdscr,height,width):
         x=(width-len(contents[i]))//2
         stdscr.addstr(y+i, x, contents[i])
 
-    draw_structure(stdscr,barracks, 10, 10)
-    draw_structure(stdscr,barracks, 10, 15, labeled = True, highlighted=True)
     stdscr.getch()
 
 def main(stdscr):
@@ -63,7 +51,7 @@ def main(stdscr):
     curses.init_pair(1,curses.COLOR_YELLOW,curses.COLOR_BLACK)
     curses.curs_set(0)
     curses.mousemask(curses.ALL_MOUSE_EVENTS | curses.REPORT_MOUSE_POSITION)
-    structures = [(10, 5), (8,9), (15, 20)]
+    structures = []
     height, width = stdscr.getmaxyx()
     stdscr.clear()
     show_title_screen(stdscr,height,width)
