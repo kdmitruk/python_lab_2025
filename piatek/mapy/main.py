@@ -39,9 +39,10 @@ def draw_map(stdscr, structures):
     for y, x in structures:
         draw_structure(stdscr,barracks,x,y,centered=True)
 
-def draw_scene(stdscr, structures, height, width):
+def draw_scene(stdscr, structures, active_structure, available_structures, height, width):
     stdscr.clear()
     draw_map(stdscr, structures)
+    stdscr.addstr(height - 1, 0, list(available_structures.keys())[active_structure])
     stdscr.refresh()
 
 def show_title_screen(stdscr,height,width):
@@ -57,6 +58,8 @@ def main(stdscr):
     global barracks
     barracks = load_structure_from_file("structures/barracks.txt")
     available_structures=load_structure_from_directory('structures')
+    active_structure = 0
+
     curses.start_color()
     curses.init_pair(1,curses.COLOR_YELLOW,curses.COLOR_BLACK)
     curses.curs_set(0)
@@ -66,9 +69,13 @@ def main(stdscr):
     stdscr.clear()
     show_title_screen(stdscr,height,width)
     while True:
-        draw_scene(stdscr, structures, height, width)
+        draw_scene(stdscr, structures, active_structure, available_structures, height, width)
         ch = stdscr.getch()
-        if ch == curses.KEY_MOUSE:
+        if ch == ord('q'):
+            break
+        elif ch in list(range(ord('1'),ord('4') + 1)):
+            active_structure = ch - ord('1')
+        elif ch == curses.KEY_MOUSE:
             _, x, y, _, bstate = curses.getmouse()
             if bstate & curses.BUTTON1_CLICKED:
                 add_structure(structures, y, x,height)
