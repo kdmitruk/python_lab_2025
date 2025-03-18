@@ -18,3 +18,8 @@ class Fraction:
         gcd = abs((self.nominator * self.denominator) // lcm(self.nominator,self.denominator))
         self.nominator //= gcd
         self.denominator //= gcd
+
+    def __mul__(self, other):
+        nominator=self.nominator*other.nominator
+        denominator=self.denominator*other.denominator
+        return Fraction(nominator, denominator)
