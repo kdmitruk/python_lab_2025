@@ -11,6 +11,6 @@ def main():
     for _ in range(3):
         f *= nf
     print(f)
-    print(f*5)
+    print(2*f)
 if __name__ == '__main__':
     main()

@@ -25,6 +25,8 @@ class Fraction:
             nominator=self.nominator*other.nominator
             denominator=self.denominator*other.denominator
             return Fraction(nominator, denominator)
+        elif isinstance(other, int):
+            return Fraction(self.nominator * other, self.denominator)
         else:
             return NotImplemented
 
@@ -33,5 +35,5 @@ class Fraction:
         self.denominator = self.denominator * other.denominator
         return self
 
-    #def __rmul__(self, other):
-    #    return other.__mul__(self)
+    def __rmul__(self, other):
+        return self.__mul__(other)
