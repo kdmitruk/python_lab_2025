@@ -1,12 +1,8 @@
 from fraction import Fraction
 
 def main():
-    f = Fraction()
-    f.nominator = 7
-    f.denominator = 7
-    nf = Fraction()
-    nf.nominator = 5
-    nf.denominator = 9
+    f = Fraction(7,7)
+    nf = Fraction(45,81)
     print(f"{f.nominator}/{f.denominator} czy integer: ", f.is_integer())
     print(f"{nf.nominator}/{nf.denominator} czy integer: ", nf.is_integer())
     print(str(f))
