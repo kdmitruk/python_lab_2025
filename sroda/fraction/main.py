@@ -21,5 +21,7 @@ def main():
     #     print(str(e))
     # except ValueError as e:
     #     print(e)
+    print(Fraction(1,2) + Fraction(3,4))
+    print(Fraction(1,2) - Fraction(3,4))
 if __name__ == '__main__':
     main()

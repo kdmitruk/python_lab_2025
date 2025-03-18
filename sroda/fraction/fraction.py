@@ -16,6 +16,10 @@ class Fraction:
 
     def __float__(self):
         return float(self.nominator/self.denominator)
+    def __add__(self, other):
+        return Fraction(self.nominator*other.denominator + other.nominator * self.denominator,self.denominator*other.denominator)
+    def __sub__(self, other):
+        return Fraction(self.nominator*other.denominator - other.nominator * self.denominator,self.denominator*other.denominator)
 
     def __reduce(self):
         gcd = abs((self.nominator * self.denominator) // lcm(self.nominator,self.denominator))
