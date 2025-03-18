@@ -8,5 +8,8 @@ def main():
     print(str(f))
     print(float(f), float(nf))
     print(f*nf)
+    for _ in range(3):
+        f *= nf
+    print(f)
 if __name__ == '__main__':
     main()
