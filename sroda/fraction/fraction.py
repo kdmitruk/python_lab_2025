@@ -37,3 +37,6 @@ class Fraction:
 
     def __rmul__(self, other):
         return self.__mul__(other)
+
+    def __truediv__(self, other):
+        return self.__mul__(Fraction(other.denominator, other.nominator))

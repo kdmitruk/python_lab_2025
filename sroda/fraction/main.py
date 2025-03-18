@@ -12,5 +12,6 @@ def main():
         f *= nf
     print(f)
     print(2*f)
+    print(Fraction(1, 2) / Fraction(3, 4))
 if __name__ == '__main__':
     main()
