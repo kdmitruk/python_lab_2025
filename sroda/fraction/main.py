@@ -1,21 +1,9 @@
-class Fraction:
-    def __init__(self, nominator=None, denominator=None):
-        self.nominator = nominator
-        self.denominator = denominator
-
-    def is_integer(self):
-        return self.nominator % self.denominator == 0
-
-    def __str__(self):
-        return f"{self.nominator}/{self.denominator}"
-
-    def __float__(self):
-        return float(self.nominator/self.denominator)
+from fraction import Fraction
 
 def main():
     f = Fraction()
-    f.nominator = 6
-    f.denominator = 6
+    f.nominator = 7
+    f.denominator = 7
     nf = Fraction()
     nf.nominator = 5
     nf.denominator = 9
