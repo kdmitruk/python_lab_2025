@@ -9,6 +9,8 @@ class Fraction:
     def __str__(self):
         return f"{self.nominator}/{self.denominator}"
 
+    def __float__(self):
+        return float(self.nominator/self.denominator)
 
 def main():
     f = Fraction()
@@ -20,6 +22,6 @@ def main():
     print(f"{f.nominator}/{f.denominator} czy integer: ", f.is_integer())
     print(f"{nf.nominator}/{nf.denominator} czy integer: ", nf.is_integer())
     print(str(f))
-
+    print(float(f), float(nf))
 if __name__ == '__main__':
     main()
