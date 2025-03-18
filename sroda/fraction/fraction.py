@@ -1,9 +1,12 @@
 from math import lcm
 class Fraction:
     def __init__(self, nominator, denominator):
+        if denominator == 0:
+            raise ValueError("Denominator = 0")
         self.nominator = nominator
         self.denominator = denominator
-        self.__reduce()
+        if nominator != 0:
+            self.__reduce()
 
     def is_integer(self):
         return self.nominator % self.denominator == 0
@@ -39,4 +42,6 @@ class Fraction:
         return self.__mul__(other)
 
     def __truediv__(self, other):
+        if other.nominator == 0:
+            raise ZeroDivisionError("Dzielenie przez 0")
         return self.__mul__(Fraction(other.denominator, other.nominator))

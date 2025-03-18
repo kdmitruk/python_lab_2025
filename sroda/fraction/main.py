@@ -12,6 +12,14 @@ def main():
         f *= nf
     print(f)
     print(2*f)
-    print(Fraction(1, 2) / Fraction(3, 4))
+    try:
+        ff = Fraction(4, 0)
+        print(Fraction(1, 2) / ff)
+    except (ZeroDivisionError,ValueError) as e:
+        print(e)
+    # except ZeroDivisionError as e:
+    #     print(str(e))
+    # except ValueError as e:
+    #     print(e)
 if __name__ == '__main__':
     main()
