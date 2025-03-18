@@ -16,10 +16,17 @@ class Fraction:
 
     def __float__(self):
         return float(self.nominator/self.denominator)
+
+    def __operation(self, other, operand):
+        return Fraction(operand(self.nominator*other.denominator, other.nominator * self.denominator),self.denominator*other.denominator)
+
     def __add__(self, other):
-        return Fraction(self.nominator*other.denominator + other.nominator * self.denominator,self.denominator*other.denominator)
+        # return Fraction(self.nominator*other.denominator + other.nominator * self.denominator,self.denominator*other.denominator)
+        return self.__operation(other,lambda a,b: a+b)
+
     def __sub__(self, other):
-        return Fraction(self.nominator*other.denominator - other.nominator * self.denominator,self.denominator*other.denominator)
+        # return Fraction(self.nominator*other.denominator - other.nominator * self.denominator,self.denominator*other.denominator)
+        return self.__operation(other, lambda a,b : a-b)
 
     def __reduce(self):
         gcd = abs((self.nominator * self.denominator) // lcm(self.nominator,self.denominator))
