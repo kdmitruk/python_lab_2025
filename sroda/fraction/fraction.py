@@ -20,9 +20,13 @@ class Fraction:
         self.denominator //= gcd
 
     def __mul__(self, other):
-        nominator=self.nominator*other.nominator
-        denominator=self.denominator*other.denominator
-        return Fraction(nominator, denominator)
+        #if other.__class__.__name__ == Fraction.__name__:
+        if isinstance(other, Fraction):
+            nominator=self.nominator*other.nominator
+            denominator=self.denominator*other.denominator
+            return Fraction(nominator, denominator)
+        else:
+            return NotImplemented
 
     def __imul__(self, other):
         self.nominator = self.nominator * other.nominator
