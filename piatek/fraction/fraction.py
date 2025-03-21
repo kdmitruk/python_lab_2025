@@ -23,14 +23,16 @@ class Fraction:
         self.nominator//=gcd_value
         self.denominator//=gcd_value
 
+    def __common(self, other, operator):
+        nom = operator(self.nominator * other.denominator, other.nominator * self.denominator)
+        dem = self.denominator * other.denominator
+        return Fraction(nom, dem)
+
     def __add__(self, other):
-        nom = self.nominator * other.denominator + other.nominator * self.denominator
-        dem = self.denominator * other.denominator
-        return Fraction(nom, dem)
+        return self.__common(other, lambda x, y: x + y)
+
     def __sub__(self, other):
-        nom = self.nominator * other.denominator - other.nominator * self.denominator
-        dem = self.denominator * other.denominator
-        return Fraction(nom, dem)
+        return self.__common(other, lambda x, y: x - y)
 
     def __mul__(self, other):
         if isinstance(other, Fraction):

@@ -16,7 +16,7 @@ def main():
     except (ZeroDivisionError,ValueError) as error:
         print(error)
 
-    print(fraction1 - fraction2)
+    print(fraction1 + fraction2)
     #except ValueError as error:
        # print(error)
 
