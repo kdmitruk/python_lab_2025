@@ -10,7 +10,8 @@ def main():
     #print(fraction1)
     fraction3 = fraction1 * 5
     fraction4 = 5 * fraction2
-    print(fraction4)
+    fraction5 = fraction2 / Fraction(2,1)
+    print(fraction5)
     #print(str(fraction1))
    # print(str(fraction2))
     #print(float(fraction2))
