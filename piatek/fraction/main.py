@@ -8,7 +8,7 @@ def main():
 
     #fraction1 *= fraction2
     #print(fraction1)
-    fraction3 = fraction1 * fraction2
+    fraction3 = fraction1 * 5
     print(fraction3)
     #print(str(fraction1))
    # print(str(fraction2))
