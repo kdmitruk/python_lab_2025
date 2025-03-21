@@ -41,4 +41,6 @@ class Fraction:
         return self.__mul__(other)
 
     def __truediv__(self, other):
+        if other.nominator == 0:
+            raise ZeroDivisionError("The nominator is 0")
         return self.__mul__(Fraction(other.denominator, other.nominator))

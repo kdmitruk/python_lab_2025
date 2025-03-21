@@ -10,8 +10,12 @@ def main():
     #print(fraction1)
     fraction3 = fraction1 * 5
     fraction4 = 5 * fraction2
-    fraction5 = fraction2 / Fraction(2,1)
-    print(fraction5)
+    try:
+        fraction5 = fraction2 / Fraction(0,1)
+        print(fraction5)
+    except ZeroDivisionError as error:
+        print(error)
+
     #print(str(fraction1))
    # print(str(fraction2))
     #print(float(fraction2))
