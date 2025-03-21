@@ -9,11 +9,15 @@ class Fraction:
     def __str__(self):
         return f"{self.nominator}/{self.denominator}"
 
+    def __float__(self):
+        return float(self.nominator/self.denominator)
+
 def main():
     fraction = Fraction(2,2)
     fraction2 = Fraction(3,4)
 
     print(str(fraction))
+    print(float(fraction2))
     print(fraction.is_integer())
 
 if __name__ == '__main__':
