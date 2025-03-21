@@ -23,3 +23,7 @@ class Fraction:
         nom = self.nominator*other.nominator
         den = self.denominator*other.denominator
         return Fraction(nom, den)
+    def __imul__(self, other):
+        self.nominator*=other.nominator
+        self.denominator*=other.denominator
+        return self
