@@ -1,24 +1,14 @@
-class Fraction:
-    def __init__(self,nominator,denominator):
-        self.nominator = nominator
-        self.denominator = denominator
-
-    def is_integer(self):
-        return self.nominator % self.denominator == 0
-
-    def __str__(self):
-        return f"{self.nominator}/{self.denominator}"
-
-    def __float__(self):
-        return float(self.nominator/self.denominator)
+from fraction import Fraction
+#import fraction
+#import fraction as f
 
 def main():
-    fraction = Fraction(2,2)
+    fraction1 = Fraction(2,2)
     fraction2 = Fraction(3,4)
 
-    print(str(fraction))
+    print(str(fraction1))
     print(float(fraction2))
-    print(fraction.is_integer())
+    print(fraction1.is_integer())
 
 if __name__ == '__main__':
     main()
