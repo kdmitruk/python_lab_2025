@@ -5,8 +5,8 @@ from fraction import Fraction
 
 class MixedFraction(Fraction):
 
-    def __init__(self, whole, nominator, denominator):
-        super().__init__(whole * denominator + nominator, denominator)
+    # def __init__(self, whole, nominator, denominator):
+    #     super().__init__(whole * denominator + nominator, denominator)
 
     @override
     def __str__(self):

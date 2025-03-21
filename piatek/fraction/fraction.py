@@ -26,7 +26,7 @@ class Fraction:
     def __common(self, other, operator):
         nom = operator(self.nominator * other.denominator, other.nominator * self.denominator)
         dem = self.denominator * other.denominator
-        return Fraction(nom, dem)
+        return self.__class__(nom, dem)
 
     def __add__(self, other):
         return self.__common(other, lambda x, y: x + y)
