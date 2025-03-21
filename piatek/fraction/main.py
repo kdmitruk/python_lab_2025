@@ -1,4 +1,7 @@
 from fraction import Fraction
+from mixedfraction import MixedFraction
+
+
 #import fraction
 #import fraction as f
 
@@ -17,6 +20,7 @@ def main():
         print(error)
 
     print(fraction1 + fraction2)
+    print(MixedFraction(1,1,2))
     #except ValueError as error:
        # print(error)
 
