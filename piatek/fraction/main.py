@@ -3,13 +3,14 @@ from fraction import Fraction
 #import fraction as f
 
 def main():
-    fraction1 = Fraction(0,2)
+    fraction1 = Fraction(5,7)
     fraction2 = Fraction(8,6)
-
-    print(str(fraction1))
-    print(str(fraction2))
-    print(float(fraction2))
-    print(fraction1.is_integer())
+    fraction3 = fraction1*fraction2
+    print(fraction3)
+    #print(str(fraction1))
+   # print(str(fraction2))
+    #print(float(fraction2))
+   # print(fraction1.is_integer())
 
 if __name__ == '__main__':
     main()

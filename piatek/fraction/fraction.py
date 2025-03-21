@@ -19,3 +19,7 @@ class Fraction:
         gcd_value=gcd(self.nominator,self.denominator)
         self.nominator//=gcd_value
         self.denominator//=gcd_value
+    def __mul__(self, other):
+        nom = self.nominator*other.nominator
+        den = self.denominator*other.denominator
+        return Fraction(nom, den)
