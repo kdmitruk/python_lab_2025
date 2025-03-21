@@ -11,10 +11,12 @@ def main():
     fraction3 = fraction1 * 5
     fraction4 = 5 * fraction2
     try:
-        fraction5 = fraction2 / Fraction(0,1)
+        fraction5 = fraction2 / Fraction(1,0)
         print(fraction5)
-    except ZeroDivisionError as error:
+    except (ZeroDivisionError,ValueError) as error:
         print(error)
+    #except ValueError as error:
+       # print(error)
 
     #print(str(fraction1))
    # print(str(fraction2))

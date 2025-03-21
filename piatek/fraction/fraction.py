@@ -2,9 +2,12 @@ from math import gcd
 
 class Fraction:
     def __init__(self,nominator,denominator):
+        if denominator == 0:
+            raise ValueError("The denominator is 0")
         self.nominator = nominator
         self.denominator = denominator
         self.__reduce()
+
 
     def is_integer(self):
         return self.denominator == 1
