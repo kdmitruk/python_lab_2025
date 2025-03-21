@@ -3,8 +3,8 @@ from fraction import Fraction
 #import fraction as f
 
 def main():
-    fraction1 = Fraction(5,7)
-    fraction2 = Fraction(8,6)
+    fraction1 = Fraction(1,2)
+    fraction2 = Fraction(3,4)
 
     #fraction1 *= fraction2
     #print(fraction1)
@@ -15,6 +15,8 @@ def main():
         print(fraction5)
     except (ZeroDivisionError,ValueError) as error:
         print(error)
+
+    print(fraction1 - fraction2)
     #except ValueError as error:
        # print(error)
 
