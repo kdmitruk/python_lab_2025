@@ -36,3 +36,6 @@ class Fraction:
         self.nominator*=other.nominator
         self.denominator*=other.denominator
         return self
+
+    def __rmul__(self, other):
+        return self.__mul__(other)
