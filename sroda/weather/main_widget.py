@@ -14,6 +14,7 @@ class MainWidget(QWidget):
         self.city_list = QListWidget(self)
 
         self.button.clicked.connect(self._on_button_clicked)
+        self.city_list.itemClicked.connect(self.on_city_clicked)
 
         layout = QGridLayout(self)
         layout.addWidget(self.edit, 0, 0, 1, 1)
@@ -47,7 +48,8 @@ class MainWidget(QWidget):
         longitude = result["longitude"]
         print(latitude, longitude)
 
-
+    def on_city_clicked(self):
+        print(self.city_list.currentItem().data(Qt.UserRole))
 
 
 
