@@ -21,7 +21,14 @@ class MainWidget(QWidget):
         text = self.edit.text()
         #self.label.setText(text)
         response = requests.get(f'https://geocoding-api.open-meteo.com/v1/search?name={text}')
-        print(response.json())
+        #print(response.json())
+        results = response.json()["results"]
+        #print(results)
+        result = results[0]
+        #print(result)
+        latitude = result["latitude"]
+        longitude = result["longitude"]
+        print(latitude, longitude)
 
 
 
