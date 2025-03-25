@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QWidget, QLabel, QPushButton, QLineEdit, QGridLayout, QMessageBox
+from PySide6.QtWidgets import QWidget, QLabel, QPushButton, QLineEdit, QGridLayout, QMessageBox, QListWidget
 import requests
 
 class MainWidget(QWidget):
@@ -9,13 +9,15 @@ class MainWidget(QWidget):
         self.label = QLabel(self)
         self.button = QPushButton(self)
         self.edit = QLineEdit("abdsabsd", self)
+        self.city_list = QListWidget(self)
 
         self.button.clicked.connect(self._on_button_clicked)
 
         layout = QGridLayout(self)
         layout.addWidget(self.edit, 0, 0, 1, 1)
         layout.addWidget(self.button, 0, 1, 1, 1)
-        layout.addWidget(self.label, 1, 0, 1, 2)
+        layout.addWidget(self.city_list, 1, 0, 1, 2)
+        layout.addWidget(self.label, 2, 0, 1, 2)
 
     def _on_button_clicked(self):
         text = self.edit.text()
@@ -27,7 +29,10 @@ class MainWidget(QWidget):
             QMessageBox.information(self, "error", "Brak miejscowosci")
             return
 
-        results = response.json()["results"]
+        results = json["results"]
+        self.city_list.clear()
+        for city in results:
+            self.city_list.addItem(city["name"])
         #print(results)
         result = results[0]
         #print(result)
