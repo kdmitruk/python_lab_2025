@@ -14,7 +14,7 @@ class MainWidget(QWidget):
         self.city_list = QListWidget(self)
 
         self.button.clicked.connect(self._on_button_clicked)
-        self.city_list.itemClicked.connect(self.on_city_clicked)
+        self.city_list.itemClicked.connect(self._on_city_clicked)
 
         layout = QGridLayout(self)
         layout.addWidget(self.edit, 0, 0, 1, 1)
@@ -24,9 +24,7 @@ class MainWidget(QWidget):
 
     def _on_button_clicked(self):
         text = self.edit.text()
-        #self.label.setText(text)
         response = requests.get(f'https://geocoding-api.open-meteo.com/v1/search?name={text}')
-        #print(response.json())
         json = response.json()
         if "results" not in json.keys():
             QMessageBox.information(self, "error", "Brak miejscowosci")
@@ -35,20 +33,13 @@ class MainWidget(QWidget):
         results = json["results"]
         self.city_list.clear()
         for city in results:
-            #self.city_list.addItem(city["name"])
             item = QListWidgetItem(city["name"])
             latitude = city["latitude"]
             longitude = city["longitude"]
             item.setData(Qt.UserRole,(latitude,longitude))
             self.city_list.addItem(item)
-        #print(results)
-        result = results[0]
-        #print(result)
-        latitude = result["latitude"]
-        longitude = result["longitude"]
-        print(latitude, longitude)
 
-    def on_city_clicked(self):
+    def _on_city_clicked(self):
         print(self.city_list.currentItem().data(Qt.UserRole))
 
 
