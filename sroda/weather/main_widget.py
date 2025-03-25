@@ -1,4 +1,6 @@
-from PySide6.QtWidgets import QWidget, QLabel, QPushButton, QLineEdit, QGridLayout, QMessageBox, QListWidget
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QWidget, QLabel, QPushButton, QLineEdit, QGridLayout, QMessageBox, QListWidget, \
+    QListWidgetItem
 import requests
 
 class MainWidget(QWidget):
@@ -8,7 +10,7 @@ class MainWidget(QWidget):
 
         self.label = QLabel(self)
         self.button = QPushButton(self)
-        self.edit = QLineEdit("abdsabsd", self)
+        self.edit = QLineEdit("Lublin", self)
         self.city_list = QListWidget(self)
 
         self.button.clicked.connect(self._on_button_clicked)
@@ -32,7 +34,12 @@ class MainWidget(QWidget):
         results = json["results"]
         self.city_list.clear()
         for city in results:
-            self.city_list.addItem(city["name"])
+            #self.city_list.addItem(city["name"])
+            item = QListWidgetItem(city["name"])
+            latitude = city["latitude"]
+            longitude = city["longitude"]
+            item.setData(Qt.UserRole,(latitude,longitude))
+            self.city_list.addItem(item)
         #print(results)
         result = results[0]
         #print(result)
