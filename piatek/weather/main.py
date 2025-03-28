@@ -1,8 +1,11 @@
 from PySide6.QtWidgets import QApplication, QWidget
 
+from main_widget import MainWidget
+
+
 def main():
     app = QApplication()
-    widget = QWidget()
+    widget = MainWidget()
     widget.show()
     return app.exec()
 
