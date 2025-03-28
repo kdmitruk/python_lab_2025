@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QWidget, QLineEdit, QPushButton, QLabel, QGridLayout
+from PySide6.QtWidgets import QWidget, QLineEdit, QPushButton, QLabel, QGridLayout, QMessageBox
 import requests
 
 class MainWidget(QWidget):
@@ -23,7 +23,8 @@ class MainWidget(QWidget):
         response = requests.get(url)
         json = response.json()
         if 'results' not in json.keys():
-            print("No such city!")
+            #print("No such city!")
+            QMessageBox.critical(self, "Error!!!", "No such city")
             return
         results = json['results']
         city = results[0]
