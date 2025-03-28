@@ -3,6 +3,9 @@ from PySide6.QtWidgets import QWidget, QLineEdit, QPushButton, QLabel, QGridLayo
     QListWidgetItem
 import requests
 
+from settings_dialog import SettingsDialog
+
+
 class MainWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -11,7 +14,10 @@ class MainWidget(QWidget):
         get_cities_button = QPushButton("Get cities", self)
         self.weather_label = QLabel(self)
         self.city_list = QListWidget(self)
+        settings_button = QPushButton("Settings", self)
+
         get_cities_button.clicked.connect(self.get_cities)
+        settings_button.clicked.connect(self.show_settings)
         self.city_list.itemClicked.connect(self.get_weather)
 
         layout = QGridLayout(self)
@@ -19,6 +25,7 @@ class MainWidget(QWidget):
         layout.addWidget(get_cities_button, 0, 1)
         layout.addWidget(self.city_list, 1, 0, 1, 2)
         layout.addWidget(self.weather_label, 2, 0, 1, 2)
+        layout.addWidget(settings_button, 3, 0, 1, 2)
 
 
 
@@ -50,3 +57,8 @@ class MainWidget(QWidget):
         json = response.json()
         self.weather_label.setText(str(json['current']['temperature_2m']))
         # print(json['current']['temperature_2m'])
+
+    def show_settings(self):
+        settings_dialog = SettingsDialog()
+
+        settings_dialog.exec()
