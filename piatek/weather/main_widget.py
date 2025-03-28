@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QWidget, QLineEdit, QPushButton, QLabel, QGridLayout, QMessageBox
+from PySide6.QtWidgets import QWidget, QLineEdit, QPushButton, QLabel, QGridLayout, QMessageBox, QListWidget
 import requests
 
 class MainWidget(QWidget):
@@ -8,12 +8,14 @@ class MainWidget(QWidget):
         self.city_edit = QLineEdit('Lublin', self)
         get_cities_button = QPushButton("Get cities", self)
         self.weather_label = QLabel(self)
+        self.city_list = QListWidget(self)
         get_cities_button.clicked.connect(self.get_cities)
 
         layout = QGridLayout(self)
         layout.addWidget(self.city_edit, 0, 0)
         layout.addWidget(get_cities_button, 0, 1)
-        layout.addWidget(self.weather_label, 1, 0, 1, 2)
+        layout.addWidget(self.city_list, 1, 0, 1, 2)
+        layout.addWidget(self.weather_label, 2, 0, 1, 2)
 
 
 
@@ -27,7 +29,10 @@ class MainWidget(QWidget):
             QMessageBox.critical(self, "Error!!!", "No such city")
             return
         results = json['results']
-        city = results[0]
-        latitude = city['latitude']
-        longitude = city['longitude']
-        print(latitude, longitude)
+        for city in results:
+            latitude = city['latitude']
+            longitude = city['longitude']
+            print(latitude, longitude)
+            name = city['name']
+            country = city['country']
+            self.city_list.addItem(f"{name}, {country}")
