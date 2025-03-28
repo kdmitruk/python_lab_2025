@@ -1,4 +1,6 @@
-from PySide6.QtWidgets import QWidget, QLineEdit, QPushButton, QLabel, QGridLayout, QMessageBox, QListWidget
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QWidget, QLineEdit, QPushButton, QLabel, QGridLayout, QMessageBox, QListWidget, \
+    QListWidgetItem
 import requests
 
 class MainWidget(QWidget):
@@ -35,4 +37,7 @@ class MainWidget(QWidget):
             print(latitude, longitude)
             name = city['name']
             country = city['country']
-            self.city_list.addItem(f"{name}, {country}")
+            item = QListWidgetItem(f"{name}, {country}")
+            item.setData(Qt.UserRole,(latitude, longitude))
+            self.city_list.addItem(item)
+
