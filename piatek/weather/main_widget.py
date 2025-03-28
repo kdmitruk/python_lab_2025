@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QWidget, QLineEdit, QPushButton, QLabel, QGridLayout
-
+import requests
 
 class MainWidget(QWidget):
     def __init__(self, parent=None):
@@ -15,5 +15,11 @@ class MainWidget(QWidget):
         layout.addWidget(get_cities_button, 0, 1)
         layout.addWidget(self.weather_label, 1, 0, 1, 2)
 
+
+
     def get_cities(self):
-        self.weather_label.setText(self.city_edit.text())
+        # self.weather_label.setText(self.city_edit.text())
+        url = f"https://geocoding-api.open-meteo.com/v1/search?name={self.city_edit.text()}"
+        response = requests.get(url)
+        print(response.json())
+
