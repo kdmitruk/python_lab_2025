@@ -5,7 +5,7 @@ class MainWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle('Weather')
-        self.city_edit = QLineEdit(self)
+        self.city_edit = QLineEdit('Lublin', self)
         get_cities_button = QPushButton("Get cities", self)
         self.weather_label = QLabel(self)
         get_cities_button.clicked.connect(self.get_cities)
@@ -21,5 +21,12 @@ class MainWidget(QWidget):
         # self.weather_label.setText(self.city_edit.text())
         url = f"https://geocoding-api.open-meteo.com/v1/search?name={self.city_edit.text()}"
         response = requests.get(url)
-        print(response.json())
-
+        json = response.json()
+        if 'results' not in json.keys():
+            print("No such city!")
+            return
+        results = json['results']
+        city = results[0]
+        latitude = city['latitude']
+        longitude = city['longitude']
+        print(latitude, longitude)
