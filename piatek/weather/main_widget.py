@@ -1,4 +1,4 @@
-from PySide6.QtCore import Qt
+from PySide6.QtGui import Qt
 from PySide6.QtWidgets import QWidget, QLineEdit, QPushButton, QLabel, QGridLayout, QMessageBox, QListWidget, \
     QListWidgetItem
 import requests
@@ -43,4 +43,10 @@ class MainWidget(QWidget):
             self.city_list.addItem(item)
 
     def get_weather(self):
-        print(self.city_list.currentItem().data(Qt.UserRole))
+        # print(self.city_list.currentItem().data(Qt.UserRole))
+        latitude,longitude = self.city_list.currentItem().data(Qt.UserRole)
+        url=f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current=temperature_2m"
+        response = requests.get(url)
+        json = response.json()
+        self.weather_label.setText(str(json['current']['temperature_2m']))
+        # print(json['current']['temperature_2m'])
