@@ -12,6 +12,7 @@ class MainWidget(QWidget):
         self.weather_label = QLabel(self)
         self.city_list = QListWidget(self)
         get_cities_button.clicked.connect(self.get_cities)
+        self.city_list.itemClicked.connect(self.get_weather)
 
         layout = QGridLayout(self)
         layout.addWidget(self.city_edit, 0, 0)
@@ -41,3 +42,5 @@ class MainWidget(QWidget):
             item.setData(Qt.UserRole,(latitude, longitude))
             self.city_list.addItem(item)
 
+    def get_weather(self):
+        print(self.city_list.currentItem().data(Qt.UserRole))
