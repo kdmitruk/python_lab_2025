@@ -19,3 +19,17 @@ class SettingsDialog(QDialog):
         layout.addWidget(self.ok_button,3,0)
         layout.addWidget(self.cancel_button,3,1)
 
+        self.ok_button.clicked.connect(self.accept)
+        self.cancel_button.clicked.connect(self.reject)
+
+    def get_params(self):
+        result = []
+        if self.temperature_box.isChecked():
+            result += ["temperature_2m"]
+        if self.weather_code_box.isChecked():
+            result += ["weather_code"]
+        if self.pressure_msl_box.isChecked():
+            result += ["pressure_msl"]
+
+        return result
+

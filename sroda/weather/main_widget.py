@@ -28,6 +28,8 @@ class MainWidget(QWidget):
         layout.addWidget(self.label, 2, 0, 1, 2)
         layout.addWidget(self.settings_button, 3, 0, 1, 2)
 
+        self.weather_params = []
+
     def _on_button_clicked(self):
         text = self.edit.text()
         response = requests.get(f'https://geocoding-api.open-meteo.com/v1/search?name={text}')
@@ -47,14 +49,17 @@ class MainWidget(QWidget):
 
     def _on_city_clicked(self):
         latitute, longitute = self.city_list.currentItem().data(Qt.UserRole)
-        response = requests.get(f'https://api.open-meteo.com/v1/forecast?latitude={latitute}&longitude={longitute}&current=temperature_2m')
+        response = requests.get(f'https://api.open-meteo.com/v1/forecast?latitude={latitute}&longitude={longitute}&current={','.join(self.weather_params)}')
         json = response.json()
-        self.label.setText(f"{json["current"]["temperature_2m"]} stopni C")
+        self.label.setText(f"{json["current"]}")
 
 
     def __show_settings(self):
         settings_dialog = SettingsDialog(self)
         settings_dialog.exec()
+        if settings_dialog.result():
+            self.weather_params = settings_dialog.get_params()
+
 
 
 
