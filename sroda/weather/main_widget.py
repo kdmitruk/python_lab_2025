@@ -3,6 +3,9 @@ from PySide6.QtWidgets import QWidget, QLabel, QPushButton, QLineEdit, QGridLayo
     QListWidgetItem
 import requests
 
+from settings_dialog import SettingsDialog
+
+
 class MainWidget(QWidget):
     def __init__(self):
         super().__init__()
@@ -10,17 +13,20 @@ class MainWidget(QWidget):
 
         self.label = QLabel(self)
         self.button = QPushButton(self)
+        self.settings_button = QPushButton("Settings", self)
         self.edit = QLineEdit("Lublin", self)
         self.city_list = QListWidget(self)
 
         self.button.clicked.connect(self._on_button_clicked)
         self.city_list.itemClicked.connect(self._on_city_clicked)
+        self.settings_button.clicked.connect(self.__show_settings)
 
         layout = QGridLayout(self)
         layout.addWidget(self.edit, 0, 0, 1, 1)
         layout.addWidget(self.button, 0, 1, 1, 1)
         layout.addWidget(self.city_list, 1, 0, 1, 2)
         layout.addWidget(self.label, 2, 0, 1, 2)
+        layout.addWidget(self.settings_button, 3, 0, 1, 2)
 
     def _on_button_clicked(self):
         text = self.edit.text()
@@ -44,6 +50,12 @@ class MainWidget(QWidget):
         response = requests.get(f'https://api.open-meteo.com/v1/forecast?latitude={latitute}&longitude={longitute}&current=temperature_2m')
         json = response.json()
         self.label.setText(f"{json["current"]["temperature_2m"]} stopni C")
+
+
+    def __show_settings(self):
+        settings_dialog = SettingsDialog(self)
+        settings_dialog.exec()
+
 
 
 
