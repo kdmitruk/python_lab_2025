@@ -49,7 +49,7 @@ class MainWidget(QWidget):
 
     def _on_city_clicked(self):
         latitute, longitute = self.city_list.currentItem().data(Qt.UserRole)
-        response = requests.get(f'https://api.open-meteo.com/v1/forecast?latitude={latitute}&longitude={longitute}&current={','.join(self.weather_params)}')
+        response = requests.get(f'https://api.open-meteo.com/v1/forecast?latitude={latitute}&longitude={longitute}&{self.weather_params}')
         json = response.json()
         self.label.setText(f"{json["current"]}")
 
