@@ -77,6 +77,13 @@ class MainWidget(QWidget):
                 settings.setValue(f'parameters/{key}', value)
 
     def add_item_to_favourites(self):
+        checked_item = self.city_list.item(self.city_list.currentRow())
+        for row in range(self.favourite_city_list.count()):
+            item = self.favourite_city_list.item(row)
+            if item==checked_item:
+                QMessageBox.critical(self, "Error!!!", "To miasto już zostało dodane")
+                return
+
         taken_item = self.city_list.takeItem(self.city_list.currentRow())
 
         self.favourite_city_list.addItem(taken_item)
