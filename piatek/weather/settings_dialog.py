@@ -1,3 +1,4 @@
+from PySide6.QtCore import QSettings
 from PySide6.QtWidgets import QDialog, QCheckBox, QPushButton, QGridLayout
 
 
@@ -6,9 +7,13 @@ class SettingsDialog(QDialog):
         super().__init__(parent)
         self.setWindowTitle("Settings")
 
+        settings = QSettings()
         self.temperature_box = QCheckBox('Temperature', self)
+        self.temperature_box.setChecked(settings.value('parameters/temperature_2m', True, type=bool))
         self.weather_code_box = QCheckBox('Weather code', self)
+        self.weather_code_box.setChecked(settings.value('parameters/weather_code', False, type=bool))
         self.pressure_box = QCheckBox('Pressure', self)
+        self.pressure_box.setChecked(settings.value('parameters/pressure_msl', False, type=bool))
         okay_button = QPushButton('Okay', self)
         cancel_button = QPushButton('Cancel', self)
 
