@@ -17,17 +17,21 @@ class MainWidget(QWidget):
         self.weather_label = QLabel(self)
         self.city_list = QListWidget(self)
         settings_button = QPushButton("Settings", self)
+        self.favourite_city_list = QListWidget(self)
 
         get_cities_button.clicked.connect(self.get_cities)
         settings_button.clicked.connect(self.show_settings)
-        self.city_list.itemClicked.connect(self.get_weather)
+        #self.city_list.itemClicked.connect(self.get_weather)
+        self.city_list.itemDoubleClicked.connect(self.add_item_to_favourites)
+
 
         layout = QGridLayout(self)
         layout.addWidget(self.city_edit, 0, 0)
         layout.addWidget(get_cities_button, 0, 1)
-        layout.addWidget(self.city_list, 1, 0, 1, 2)
+        layout.addWidget(self.city_list, 1, 0, 1, 1)
         layout.addWidget(self.weather_label, 2, 0, 1, 2)
         layout.addWidget(settings_button, 3, 0, 1, 2)
+        layout.addWidget(self.favourite_city_list, 1, 1, 1, 1)
 
         # self.weather_params = {"temperature_2m": True}
 
@@ -71,3 +75,8 @@ class MainWidget(QWidget):
             settings = QSettings()
             for key, value in settings_dialog.result_data().items():
                 settings.setValue(f'parameters/{key}', value)
+
+    def add_item_to_favourites(self):
+        taken_item = self.city_list.takeItem(self.city_list.currentRow())
+
+        self.favourite_city_list.addItem(taken_item)
