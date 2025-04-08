@@ -17,17 +17,20 @@ class MainWidget(QWidget):
         self.settings_button = QPushButton("Settings", self)
         self.edit = QLineEdit("Lublin", self)
         self.city_list = QListWidget(self)
+        self.fav_city_list = QListWidget(self)
 
         self.button.clicked.connect(self._on_button_clicked)
-        self.city_list.itemClicked.connect(self._on_city_clicked)
+        self.city_list.itemDoubleClicked.connect(self.__move_city_to_fav)
+        self.fav_city_list.itemClicked.connect(self.__get_weather_for_clicked_city)
         self.settings_button.clicked.connect(self.__show_settings)
 
         layout = QGridLayout(self)
         layout.addWidget(self.edit, 0, 0, 1, 1)
         layout.addWidget(self.button, 0, 1, 1, 1)
         layout.addWidget(self.city_list, 1, 0, 1, 2)
-        layout.addWidget(self.label, 2, 0, 1, 2)
-        layout.addWidget(self.settings_button, 3, 0, 1, 2)
+        layout.addWidget(self.fav_city_list, 2, 0, 1, 2)
+        layout.addWidget(self.label, 3, 0, 1, 2)
+        layout.addWidget(self.settings_button, 4, 0, 1, 2)
 
         self.qsettings = QSettings()
         self.weather_params = {
@@ -51,8 +54,14 @@ class MainWidget(QWidget):
             item = CityListItem(city["name"], city["latitude"], city["longitude"])
             self.city_list.addItem(item)
 
-    def _on_city_clicked(self):
-        latitute, longitute = self.city_list.currentItem().get_geo_params()
+    def __move_city_to_fav(self):
+        # current_city = self.city_list.currentItem()
+        current_city = self.city_list.takeItem(self.city_list.currentRow())
+        self.fav_city_list.addItem(current_city)
+
+
+    def __get_weather_for_clicked_city(self):
+        latitute, longitute = self.fav_city_list.currentItem().get_geo_params()
         params = []
         for key, val in self.weather_params.items():
             if val == True:
