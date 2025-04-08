@@ -1,4 +1,4 @@
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QSettings
 from PySide6.QtWidgets import QWidget, QLabel, QPushButton, QLineEdit, QGridLayout, QMessageBox, QListWidget, \
     QListWidgetItem
 import requests
@@ -28,7 +28,13 @@ class MainWidget(QWidget):
         layout.addWidget(self.label, 2, 0, 1, 2)
         layout.addWidget(self.settings_button, 3, 0, 1, 2)
 
-        self.weather_params = []
+        self.qsettings = QSettings()
+        self.weather_params = {
+            "temperature_2m": self.qsettings.value("current/temperature_2m", True, type=bool),
+            "weather_code": self.qsettings.value("current/weather_code", False, type=bool),
+            "pressure_msl": self.qsettings.value("current/pressure_msl", False, type=bool)
+        }
+        print(self.weather_params)
 
     def _on_button_clicked(self):
         text = self.edit.text()
@@ -49,16 +55,24 @@ class MainWidget(QWidget):
 
     def _on_city_clicked(self):
         latitute, longitute = self.city_list.currentItem().data(Qt.UserRole)
-        response = requests.get(f'https://api.open-meteo.com/v1/forecast?latitude={latitute}&longitude={longitute}&{self.weather_params}')
+        params = []
+        for key, val in self.weather_params.items():
+            if val == True:
+                params.append(key)
+        response = requests.get(f'https://api.open-meteo.com/v1/forecast?latitude={latitute}&longitude={longitute}&current={','.join(params)}')
         json = response.json()
         self.label.setText(f"{json["current"]}")
 
 
     def __show_settings(self):
-        settings_dialog = SettingsDialog(self)
+        settings_dialog = SettingsDialog(self.weather_params, parent=self)
         settings_dialog.exec()
         if settings_dialog.result():
             self.weather_params = settings_dialog.get_params()
+            self.qsettings.setValue("current/temperature_2m", self.weather_params["temperature_2m"])
+            self.qsettings.setValue("current/weather_code", self.weather_params["weather_code"])
+            self.qsettings.setValue("current/pressure_msl", self.weather_params["pressure_msl"])
+
 
 
 

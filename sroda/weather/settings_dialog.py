@@ -2,17 +2,24 @@ from PySide6.QtWidgets import QDialog, QCheckBox, QGridLayout, QPushButton, QCom
 
 
 class SettingsDialog(QDialog):
-    def __init__(self, parent = None):
+    def __init__(self, weather_params: dict, parent = None):
         super().__init__(parent)
         self.setWindowTitle("Settings")
 
         self.temperature_box = QCheckBox("Temperature",self)
+        self.temperature_box.setChecked(weather_params["temperature_2m"])
+
         self.temperature_unit_box = QComboBox(self)
         self.temperature_unit_box.addItem("°C")
         self.temperature_unit_box.addItem("°F")
         self.temperature_unit_box.setVisible(self.temperature_box.isChecked())
+
         self.weather_code_box = QCheckBox("Weather Code",self)
+        self.weather_code_box.setChecked(weather_params["weather_code"])
+
         self.pressure_msl_box = QCheckBox("Pressure",self)
+        self.pressure_msl_box.setChecked(weather_params["pressure_msl"])
+
         self.ok_button = QPushButton("Ok",self)
         self.cancel_button = QPushButton("Cancel",self)
 
@@ -29,19 +36,26 @@ class SettingsDialog(QDialog):
         self.temperature_box.toggled.connect(self.temperature_unit_box.setVisible)
 
     def get_params(self):
-        result = []
-        current_result = []
-        if self.temperature_box.isChecked():
-            current_result += ["temperature_2m"]
-            if self.temperature_unit_box.currentText() == "°F":
-                result += ["temperature_unit=fahrenheit"]
-        if self.weather_code_box.isChecked():
-            current_result += ["weather_code"]
-        if self.pressure_msl_box.isChecked():
-            current_result += ["pressure_msl"]
+        return {
+            "temperature_2m": self.temperature_box.isChecked(),
+            "weather_code": self.weather_code_box.isChecked(),
+            "pressure_msl": self.pressure_msl_box.isChecked()
+        }
 
-        current_result = f"current={','.join(current_result)}"
-        result += [current_result]
-        result='&'.join(result)
-        return result
+    # def get_params(self):
+    #     result = []
+    #     current_result = []
+    #     if self.temperature_box.isChecked():
+    #         current_result += ["temperature_2m"]
+    #         if self.temperature_unit_box.currentText() == "°F":
+    #             result += ["temperature_unit=fahrenheit"]
+    #     if self.weather_code_box.isChecked():
+    #         current_result += ["weather_code"]
+    #     if self.pressure_msl_box.isChecked():
+    #         current_result += ["pressure_msl"]
+    #
+    #     current_result = f"current={','.join(current_result)}"
+    #     result += [current_result]
+    #     result='&'.join(result)
+    #     return result
 
