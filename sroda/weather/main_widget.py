@@ -52,7 +52,14 @@ class MainWidget(QWidget):
         self.city_list.clear()
         for city in results:
             item = CityListItem(city["name"], city["latitude"], city["longitude"])
-            self.city_list.addItem(item)
+            found = False
+            for i in range(self.fav_city_list.count()):
+                if item == self.fav_city_list.item(i):
+                    found = True
+                    break
+            if not found:
+              self.city_list.addItem(item)
+
 
     def __move_city_to_fav(self):
         # current_city = self.city_list.currentItem()

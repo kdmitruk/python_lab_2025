@@ -11,3 +11,12 @@ class CityListItem(QListWidgetItem):
 
     def get_geo_params(self):
         return self.lat,self.long
+
+    def __eq__(self, other):
+        # if self == other:
+        #     return True
+        if not isinstance(other, CityListItem):
+            return False
+        return (self.text() == other.text()
+                and self.lat == other.lat
+                and self.long == other.long)
