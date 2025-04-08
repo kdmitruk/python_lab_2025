@@ -38,7 +38,7 @@ class MainWidget(QWidget):
             "weather_code": self.qsettings.value("current/weather_code", False, type=bool),
             "pressure_msl": self.qsettings.value("current/pressure_msl", False, type=bool)
         }
-        print(self.weather_params)
+        self.__restore_favorites()
 
     def _on_button_clicked(self):
         text = self.edit.text()
@@ -60,11 +60,24 @@ class MainWidget(QWidget):
             if not found:
               self.city_list.addItem(item)
 
+    def __update_fav_setting(self):
+        favorites = []
+        for i in range(self.fav_city_list.count()):
+            favorites.append(self.fav_city_list.item(i).serialize())
+        dump = ";".join(favorites)
+        self.qsettings.setValue("cities/favorites", dump)
+
+    def __restore_favorites(self):
+        dump = self.qsettings.value("cities/favorites", "", type=str)
+        favorites = dump.split(";")
+        for favorite in favorites:
+            self.fav_city_list.addItem(CityListItem.deserialize(favorite))
 
     def __move_city_to_fav(self):
         # current_city = self.city_list.currentItem()
         current_city = self.city_list.takeItem(self.city_list.currentRow())
         self.fav_city_list.addItem(current_city)
+        self.__update_fav_setting()
 
 
     def __get_weather_for_clicked_city(self):
@@ -87,7 +100,11 @@ class MainWidget(QWidget):
             self.qsettings.setValue("current/weather_code", self.weather_params["weather_code"])
             self.qsettings.setValue("current/pressure_msl", self.weather_params["pressure_msl"])
 
-
+    def keyPressEvent(self, event):
+        if (self.fav_city_list.hasFocus()
+                and event.key() == Qt.Key.Key_Delete):
+            self.fav_city_list.takeItem(self.fav_city_list.currentRow())
+            self.__update_fav_setting()
 
 
 
