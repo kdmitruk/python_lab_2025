@@ -3,6 +3,7 @@ from PySide6.QtWidgets import QWidget, QLabel, QPushButton, QLineEdit, QGridLayo
     QListWidgetItem
 import requests
 
+from city_list_item import CityListItem
 from settings_dialog import SettingsDialog
 
 
@@ -47,14 +48,11 @@ class MainWidget(QWidget):
         results = json["results"]
         self.city_list.clear()
         for city in results:
-            item = QListWidgetItem(city["name"])
-            latitude = city["latitude"]
-            longitude = city["longitude"]
-            item.setData(Qt.UserRole,(latitude,longitude))
+            item = CityListItem(city["name"], city["latitude"], city["longitude"])
             self.city_list.addItem(item)
 
     def _on_city_clicked(self):
-        latitute, longitute = self.city_list.currentItem().data(Qt.UserRole)
+        latitute, longitute = self.city_list.currentItem().get_geo_params()
         params = []
         for key, val in self.weather_params.items():
             if val == True:
