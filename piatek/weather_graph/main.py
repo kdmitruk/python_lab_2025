@@ -3,14 +3,7 @@ import PySide6
 import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 
-x = [0, 1]
-y = [0, 1]
 
-plt.figure(figsize=(6,4))
-plt.plot(x, y)
-plt.title('Wykres')
-plt.grid(True)
-plt.show()
 
 latitude = 51.25
 longitude = 22.57
@@ -30,5 +23,16 @@ url = (
 response = requests.get(url)
 data = response.json()
 
-# print(data["daily"])
-# print(data["hourly"])
+y = data["hourly"]["temperature_2m"]
+print(y)
+x = [i for i in range(len(y))]
+print(x)
+plt.figure(figsize=(6,4))
+plt.plot(x, y)
+plt.ylabel('temperatura')
+plt.title('Wykres')
+plt.grid(True)
+plt.show()
+
+#print(data["daily"])
+#print(data["hourly"])
