@@ -87,3 +87,15 @@ class MainWidget(QWidget):
         taken_item = self.city_list.takeItem(self.city_list.currentRow())
 
         self.favourite_city_list.addItem(taken_item)
+
+
+    def delete_item(self):
+        taken_item = self.favourite_city_list.takeItem(self.favourite_city_list.currentRow())
+        self.city_list.addItem(taken_item)
+
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key.Key_Delete and self.favourite_city_list.hasFocus():
+            self.delete_item()
+
+
