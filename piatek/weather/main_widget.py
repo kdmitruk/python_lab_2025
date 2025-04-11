@@ -33,6 +33,8 @@ class MainWidget(QWidget):
         layout.addWidget(settings_button, 3, 0, 1, 2)
         layout.addWidget(self.favourite_city_list, 1, 1, 1, 1)
 
+        self.load_persistent_cities()
+
         # self.weather_params = {"temperature_2m": True}
 
     def get_cities(self):
@@ -88,10 +90,12 @@ class MainWidget(QWidget):
 
         self.favourite_city_list.addItem(taken_item)
 
+        self.update_persistent_cities()
 
     def delete_item(self):
         taken_item = self.favourite_city_list.takeItem(self.favourite_city_list.currentRow())
         self.city_list.addItem(taken_item)
+        self.update_persistent_cities()
 
 
     def keyPressEvent(self, event):
@@ -99,3 +103,19 @@ class MainWidget(QWidget):
             self.delete_item()
 
 
+    def update_persistent_cities(self):
+        result = []
+        settings = QSettings()
+        for row in range(self.favourite_city_list.count()):
+            item = self.favourite_city_list.item(row)
+            data = item.dump()
+            result.append(data.decode('utf-8'))
+
+        settings.setValue('parameters/cities', ';'.join(result))
+
+    def load_persistent_cities(self):
+        settings = QSettings()
+        coded_cities = settings.value('parameters/cities', '', type=str)
+        for coded_city in coded_cities.split(';'):
+            city = CityListItem.from_dump(coded_city)
+            self.favourite_city_list.addItem(city)
