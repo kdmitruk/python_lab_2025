@@ -23,16 +23,19 @@ url = (
 response = requests.get(url)
 data = response.json()
 
+format = "%Y-%m-%dT%H:%M"
 y = data["hourly"]["temperature_2m"]
 print(y)
-x = [i for i in range(len(y))]
+x = [datetime.strptime(i, format) for i in data["hourly"]["time"]]
 print(x)
 plt.figure(figsize=(6,4))
 plt.plot(x, y)
 plt.ylabel('temperatura')
+plt.xlabel("czas")
+plt.xticks(rotation = 45)
 plt.title('Wykres')
 plt.grid(True)
 plt.show()
 
 #print(data["daily"])
-#print(data["hourly"])
+print(data["hourly"])
