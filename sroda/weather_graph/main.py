@@ -21,22 +21,23 @@ def get_data():
 
     response = requests.get(url)
     data = response.json()
+    print(data["hourly"])
     return data["hourly"]
     #print(data["daily"])
     #print(data["hourly"])
 
 def draw_graph(data):
-    tabx = [i for i in range(len(data["temperature_2m"]))]
+    format = "%Y-%m-%dT%H:%M"
+    hours = [datetime.strptime(i,format) for i in data["time"]]
     plt.figure(figsize=(6,4))
-    plt.plot(tabx, data["temperature_2m"], label="mój pierwszy wykres", color="red")
+    plt.plot(hours, data["temperature_2m"], label="mój pierwszy wykres", color="red")
     plt.grid()
     plt.xlabel("X")
     plt.ylabel("Y")
     plt.title("wykres")
     plt.legend()
+    plt.xticks(rotation = 45)
     plt.show()
-
-
 
 if __name__ == '__main__':
     data = get_data()
