@@ -69,9 +69,11 @@ class MainWidget(QWidget):
 
     def __restore_favorites(self):
         dump = self.qsettings.value("cities/favorites", "", type=str)
-        favorites = dump.split(";")
-        for favorite in favorites:
-            self.fav_city_list.addItem(CityListItem.deserialize(favorite))
+        if dump != "":
+            favorites = dump.split(";")
+            for favorite in favorites:
+                self.fav_city_list.addItem(CityListItem.deserialize(favorite))
+
 
     def __move_city_to_fav(self):
         # current_city = self.city_list.currentItem()
