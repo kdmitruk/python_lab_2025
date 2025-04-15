@@ -29,15 +29,22 @@ def get_data():
 def draw_graph(data):
     format = "%Y-%m-%dT%H:%M"
     hours = [datetime.strptime(i,format) for i in data["time"]]
-    plt.figure(figsize=(6,4))
-    plt.plot(hours, data["temperature_2m"], label="temperatura", color="red")
-    plt.plot(hours, data["apparent_temperature"], label="temperatura odczuwalna")
-    plt.grid()
-    plt.xlabel("X")
-    plt.ylabel("Y")
+    _, (temp_ax, rain_ax) = plt.subplots(2,1,figsize=(6,8),sharex=True)
+    # plt.figure(figsize=(6,4))
+    temp_ax.plot(hours, data["temperature_2m"], label="temperatura", color="red")
+    temp_ax.plot(hours, data["apparent_temperature"], label="temperatura odczuwalna")
+    rain_ax.bar(hours, data["precipitation"])
+    for ax in [temp_ax,rain_ax]:
+        ax.grid(True)
+        ax.set_xlabel("Czas")
+    temp_ax.set_ylabel("Temperatura")
+    temp_ax.legend()
+
+    rain_ax.set_ylabel("Wysokosc opadow")
+
     plt.title("wykres")
-    plt.legend()
     plt.xticks(rotation = 45)
+
     plt.show()
 
 if __name__ == '__main__':
