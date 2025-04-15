@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
 import PySide6
 
-def main():
+def get_data():
     latitude = 51.25
     longitude = 22.57
 
@@ -21,13 +21,14 @@ def main():
 
     response = requests.get(url)
     data = response.json()
+    return data["hourly"]
+    #print(data["daily"])
+    #print(data["hourly"])
 
-    print(data["daily"])
-    print(data["hourly"])
-
-def draw_line():
+def draw_graph(data):
+    tabx = [i for i in range(len(data["temperature_2m"]))]
     plt.figure(figsize=(6,4))
-    plt.plot([0,1],[0,1], label="mój pierwszy wykres", marker="x", color="red")
+    plt.plot(tabx, data["temperature_2m"], label="mój pierwszy wykres", color="red")
     plt.grid()
     plt.xlabel("X")
     plt.ylabel("Y")
@@ -38,5 +39,5 @@ def draw_line():
 
 
 if __name__ == '__main__':
-    #main()
-    draw_line()
+    data = get_data()
+    draw_graph(data)
