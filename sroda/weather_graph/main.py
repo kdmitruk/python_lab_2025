@@ -22,18 +22,26 @@ def get_data():
     response = requests.get(url)
     data = response.json()
     print(data["hourly"])
-    return data["hourly"]
+    return data["hourly"], data["daily"]
     #print(data["daily"])
     #print(data["hourly"])
 
 def draw_graph(data):
+    hourly, daily = data
     format = "%Y-%m-%dT%H:%M"
-    hours = [datetime.strptime(i,format) for i in data["time"]]
+    hours = [datetime.strptime(i,format) for i in hourly["time"]]
     _, (temp_ax, rain_ax) = plt.subplots(2,1,figsize=(6,8),sharex=True)
     # plt.figure(figsize=(6,4))
-    temp_ax.plot(hours, data["temperature_2m"], label="temperatura", color="red")
-    temp_ax.plot(hours, data["apparent_temperature"], label="temperatura odczuwalna")
-    rain_ax.bar(hours, data["precipitation"])
+    for time, sunrise, sunset in zip(daily["time"], daily["sunrise"], daily["sunset"]):
+        midnight = datetime.strptime(time, "%Y-%m-%d")
+        sunrise = datetime.strptime(sunrise, format)
+        sunset = datetime.strptime(sunset,format)
+        temp_ax.axvspan(sunrise,sunset, color="yellow")
+        temp_ax.axvspan(midnight,sunrise, color="black", alpha=0.1)
+        temp_ax.axvspan(sunset,midnight + timedelta(days=1), color="black", alpha=0.1)
+    temp_ax.plot(hours, hourly["temperature_2m"], label="temperatura", color="red")
+    temp_ax.plot(hours, hourly["apparent_temperature"], label="temperatura odczuwalna")
+    rain_ax.bar(hours, hourly["precipitation"])
     for ax in [temp_ax,rain_ax]:
         ax.grid(True)
         ax.set_xlabel("Czas")
