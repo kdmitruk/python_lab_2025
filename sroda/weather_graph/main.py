@@ -30,7 +30,8 @@ def draw_graph(data):
     hourly, daily = data
     format = "%Y-%m-%dT%H:%M"
     hours = [datetime.strptime(i,format) for i in hourly["time"]]
-    _, (temp_ax, rain_ax) = plt.subplots(2,1,figsize=(6,8),sharex=True)
+    temp_fig, (temp_ax) = plt.subplots(1,1,figsize=(6,4),sharex=True,dpi=75)
+    rain_fig, rain_ax = plt.subplots(1,1,figsize=(6,4),sharex=True,dpi=75)
     # plt.figure(figsize=(6,4))
     for time, sunrise, sunset in zip(daily["time"], daily["sunrise"], daily["sunset"]):
         midnight = datetime.strptime(time, "%Y-%m-%d")
@@ -42,7 +43,7 @@ def draw_graph(data):
     temp_ax.plot(hours, hourly["temperature_2m"], label="temperatura", color="red")
     temp_ax.plot(hours, hourly["apparent_temperature"], label="temperatura odczuwalna")
     rain_ax.bar(hours, hourly["precipitation"])
-    for ax in [temp_ax,rain_ax]:
+    for ax in [temp_ax, rain_ax]:
         ax.grid(True)
         ax.set_xlabel("Czas")
     temp_ax.set_ylabel("Temperatura")
@@ -51,9 +52,14 @@ def draw_graph(data):
     rain_ax.set_ylabel("Wysokosc opadow")
 
     plt.title("wykres")
-    plt.xticks(rotation = 45)
+    temp_ax.tick_params(axis="x",labelrotation = 45)
+    rain_ax.tick_params(axis="x",labelrotation = 45)
 
-    plt.show()
+
+
+    # plt.show()
+    temp_fig.savefig("temp.png")
+    rain_fig.savefig("rain.png")
 
 if __name__ == '__main__':
     data = get_data()
