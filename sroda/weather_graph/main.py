@@ -30,7 +30,8 @@ def draw_graph(data):
     format = "%Y-%m-%dT%H:%M"
     hours = [datetime.strptime(i,format) for i in data["time"]]
     plt.figure(figsize=(6,4))
-    plt.plot(hours, data["temperature_2m"], label="mój pierwszy wykres", color="red")
+    plt.plot(hours, data["temperature_2m"], label="temperatura", color="red")
+    plt.plot(hours, data["apparent_temperature"], label="temperatura odczuwalna")
     plt.grid()
     plt.xlabel("X")
     plt.ylabel("Y")
