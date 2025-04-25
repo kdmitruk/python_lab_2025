@@ -40,7 +40,7 @@ print(days)
 x = [datetime.strptime(i, format) for i in data["hourly"]["time"]]
 print(x)
 # plt.figure(figsize=(6,4))
-fig, (ax_temp, ax_rain) = plt.subplots(2,1,figsize=(6,8), sharex=True)
+fig, (ax_temp, ax_rain) = plt.subplots(2,1,figsize=(6,8), sharex=True, dpi=600)
 ax_temp.plot(x, temperature_2m, label='Temperatura', color='red')
 ax_temp.plot(x, apparent_temperature, label='Temperatura odczuwalna')
 for day in days:
@@ -57,7 +57,8 @@ ax_rain.tick_params(axis='x',rotation = 45)
 fig.canvas.manager.set_window_title('Wykres')
 for ax in [ax_temp, ax_rain]:
     ax.grid(True)
-plt.show()
+#plt.show()
+plt.savefig('plot.png')
 
 print(data["daily"])
 #print(data["hourly"])
