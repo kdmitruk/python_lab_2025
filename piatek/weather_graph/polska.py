@@ -34,7 +34,9 @@ class PolandMap:
         self.poland.plot(ax=ax, color='lightgrey', edgecolor='black')
         ax.scatter([city_pos[1] for city_pos in self.cities.values()],
                    [city_pos[0] for city_pos in self.cities.values()])
-
+        for city_name,city_pos in self.cities.items():
+            ax.text(city_pos[1],city_pos[0],city_name,ha='center',va='bottom',
+                    bbox=dict(fc="white",alpha=0.2,boxstyle="round,pad=0.6"))
 if __name__ == '__main__':
     poland = PolandMap()
     poland.draw()
