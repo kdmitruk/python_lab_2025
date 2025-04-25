@@ -24,12 +24,15 @@ response = requests.get(url)
 data = response.json()
 
 format = "%Y-%m-%dT%H:%M"
-y = data["hourly"]["temperature_2m"]
-print(y)
+temperature_2m = data["hourly"]["temperature_2m"]
+apparent_temperature = data['hourly']['apparent_temperature']
+print(temperature_2m)
 x = [datetime.strptime(i, format) for i in data["hourly"]["time"]]
 print(x)
 plt.figure(figsize=(6,4))
-plt.plot(x, y)
+plt.plot(x, temperature_2m, label='Temperatura', color='red')
+plt.plot(x, apparent_temperature, label='Temperatura odczuwalna')
+plt.legend()
 plt.ylabel('temperatura')
 plt.xlabel("czas")
 plt.xticks(rotation = 45)
