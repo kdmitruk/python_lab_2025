@@ -1,3 +1,4 @@
+import math
 from datetime import datetime, timedelta
 
 import geopandas as gpd
@@ -29,15 +30,20 @@ class PolandMap:
         self.shapefile_url = shapefile_url or default_url
         self._world = gpd.read_file(self.shapefile_url)
         self.poland = self._world[self._world['ADMIN'] == 'Poland']
+        self.active_index = 0
 
     def draw(self):
         fig, (map_ax, temp_ax) = plt.subplots(2,1, figsize=(8, 12))
+        self.fig = fig
+        self.map_ax = map_ax
+        self.temp_ax = temp_ax
         self.poland.plot(ax=map_ax, color='lightgrey', edgecolor='black')
-        data = self.get_data()
-        self.draw_cities(map_ax, data, fig)
-        self.draw_cities_labels(map_ax,data)
-        self.draw_temperature_plot(temp_ax, data)
+        self.data = self.get_data()
+        self.draw_cities(map_ax, self.data, fig)
+        self.draw_cities_labels(map_ax,self.data)
+        self.draw_temperature_plot(temp_ax, self.data)
         plt.tight_layout()
+        cid = fig.canvas.mpl_connect('button_press_event', self.onclick)
 
     def draw_cities(self, ax, data, fig):
         x = [city[2] for city in cities]
@@ -73,12 +79,25 @@ class PolandMap:
         return data
 
     def draw_temperature_plot(self, ax, data):
-        hourly = data[0]["hourly"]
+        hourly = data[self.active_index]["hourly"]
         format = "%Y-%m-%dT%H:%M"
         hours = [datetime.strptime(i,format) for i in hourly["time"]]
         ax.plot(hours, hourly["temperature_2m"], label="temperatura", color="red")
         ax.tick_params(axis="x",labelrotation = 45)
         ax.grid(True)
+        self.fig.canvas.draw()
+
+    def onclick(self,event):
+        if event.inaxes == self.map_ax:
+            for i,city in enumerate(cities):
+                print(city[0], math.hypot(city[2] - event.xdata,city[1] - event.ydata))
+                if math.hypot(city[2] - event.xdata,city[1] - event.ydata) < 0.25:
+                    self.fig.set_label(city[0])
+                    self.active_index = i
+                    self.draw_temperature_plot(self.temp_ax,self.data)
+            print('%s click: button=%d, x=%d, y=%d, xdata=%f, ydata=%f' %
+                ('double' if event.dblclick else 'single', event.button,
+                event.x, event.y, event.xdata, event.ydata))
 
 if __name__ == '__main__':
     poland = PolandMap()
