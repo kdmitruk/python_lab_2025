@@ -34,13 +34,15 @@ class PolandMap:
         fig, ax = plt.subplots(figsize=(8, 8))
         self.poland.plot(ax=ax, color='lightgrey', edgecolor='black')
         data = self.get_data()
-        self.draw_cities(ax)
+        self.draw_cities(ax, data, fig)
         self.draw_cities_labels(ax,data)
 
-    def draw_cities(self, ax):
+    def draw_cities(self, ax, data, fig):
         x = [city[2] for city in cities]
         y = [city[1] for city in cities]
-        ax.scatter(x, y)
+        c = [entry["hourly"]["temperature_2m"][0] for entry in data]
+        plot = ax.scatter(x, y, c=c, cmap="Spectral_r")
+        fig.colorbar(plot,ax=ax,label="C")
 
     def draw_cities_labels(self, ax, data):
         for city,entry in zip(cities,data):
