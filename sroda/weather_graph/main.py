@@ -55,8 +55,6 @@ def draw_graph(data):
     temp_ax.tick_params(axis="x",labelrotation = 45)
     rain_ax.tick_params(axis="x",labelrotation = 45)
 
-
-
     # plt.show()
     temp_fig.savefig("temp.png")
     rain_fig.savefig("rain.png")
