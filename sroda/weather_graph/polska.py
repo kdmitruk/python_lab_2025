@@ -31,11 +31,13 @@ class PolandMap:
         self.poland = self._world[self._world['ADMIN'] == 'Poland']
 
     def draw(self):
-        fig, ax = plt.subplots(figsize=(8, 8))
-        self.poland.plot(ax=ax, color='lightgrey', edgecolor='black')
+        fig, (map_ax, temp_ax) = plt.subplots(2,1, figsize=(8, 12))
+        self.poland.plot(ax=map_ax, color='lightgrey', edgecolor='black')
         data = self.get_data()
-        self.draw_cities(ax, data, fig)
-        self.draw_cities_labels(ax,data)
+        self.draw_cities(map_ax, data, fig)
+        self.draw_cities_labels(map_ax,data)
+        self.draw_temperature_plot(temp_ax, data)
+        plt.tight_layout()
 
     def draw_cities(self, ax, data, fig):
         x = [city[2] for city in cities]
@@ -69,6 +71,14 @@ class PolandMap:
         for i in range(len(cities)):
             print(cities[i][0], data[i]["hourly"]["temperature_2m"][0])
         return data
+
+    def draw_temperature_plot(self, ax, data):
+        hourly = data[0]["hourly"]
+        format = "%Y-%m-%dT%H:%M"
+        hours = [datetime.strptime(i,format) for i in hourly["time"]]
+        ax.plot(hours, hourly["temperature_2m"], label="temperatura", color="red")
+        ax.tick_params(axis="x",labelrotation = 45)
+        ax.grid(True)
 
 if __name__ == '__main__':
     poland = PolandMap()
