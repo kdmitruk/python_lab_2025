@@ -31,11 +31,17 @@ class PolandMap:
         fig, ax = plt.subplots(figsize=(8, 8))
         self.poland.plot(ax=ax, color='lightgrey', edgecolor='black')
         self.draw_cities(ax)
+        self.draw_cities_labels(ax)
 
     def draw_cities(self, ax):
         x = [city[2] for city in cities]
         y = [city[1] for city in cities]
         ax.scatter(x, y)
+
+    def draw_cities_labels(self, ax):
+        for city in cities:
+            ax.text(city[2],city[1], city[0], ha = "center", bbox = dict(boxstyle = "Round,pad=0.2", fc = "white", alpha = 0.2))
+
 
 if __name__ == '__main__':
     poland = PolandMap()
