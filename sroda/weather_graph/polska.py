@@ -35,16 +35,17 @@ class PolandMap:
         self.poland.plot(ax=ax, color='lightgrey', edgecolor='black')
         data = self.get_data()
         self.draw_cities(ax)
-        self.draw_cities_labels(ax)
+        self.draw_cities_labels(ax,data)
 
     def draw_cities(self, ax):
         x = [city[2] for city in cities]
         y = [city[1] for city in cities]
         ax.scatter(x, y)
 
-    def draw_cities_labels(self, ax):
-        for city in cities:
-            ax.text(city[2],city[1], city[0], ha = "center", bbox = dict(boxstyle = "Round,pad=0.2", fc = "white", alpha = 0.2))
+    def draw_cities_labels(self, ax, data):
+        for city,entry in zip(cities,data):
+            label = f"{city[0]}\n{entry["hourly"]["temperature_2m"][0]}"
+            ax.text(city[2],city[1],label , ha = "center", bbox = dict(boxstyle = "Round,pad=0.2", fc = "white", alpha = 0.2))
 
     def get_data(self):
         start_date = datetime.now().date()
