@@ -50,13 +50,21 @@ def ex8(img):
     plt.imshow(img)
     plt.show()
 
+def ex9():
+    line = np.linspace(0,255,100,dtype=np.uint8)
+    # print(line)
+    img = np.tile(line,(100,1))
+    plt.imshow(img)
+    plt.show()
+
 if __name__ == '__main__':
     ex1()
     # ex2()
-    (img1, img2) = ex4()
+    # (img1, img2) = ex4()
     #ex5(img1, 0, 1.2)
 
-    img3 = ex6(img1,60,50,20,45)
+    # img3 = ex6(img1,60,50,20,45)
 
-    ex5(img1,0,1.2)
-    ex8(img3)
+    # ex5(img1,0,1.2)
+    # ex8(img3)
+    ex9()
