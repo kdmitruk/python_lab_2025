@@ -56,6 +56,16 @@ def ex9():
     img = np.tile(line,(100,1))
     plt.imshow(img)
     plt.show()
+    return img
+
+def ex7(img):
+    img = img.copy()
+    threshold = 150
+    img[img > threshold] = 255
+    img[img < 50] = 0
+    plt.imshow(img)
+    plt.show()
+    return img
 
 if __name__ == '__main__':
     ex1()
@@ -67,4 +77,5 @@ if __name__ == '__main__':
 
     # ex5(img1,0,1.2)
     # ex8(img3)
-    ex9()
+    img = ex9()
+    ex7(img)
