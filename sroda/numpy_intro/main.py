@@ -21,7 +21,7 @@ def ex3():
 def ex4():
     img1 = np.random.normal(loc=0,scale=50,size=(100,100))
     #fig,(ax1,ax2) = plt.subplots(1,2)
-    img = np.random.randint(0, 256, (100, 100), dtype=np.uint16)
+    img = np.random.randint(0, 256, (100, 100), dtype=np.uint8)
     #ax1.imshow(img1)
     #ax2.imshow(img)
     #plt.imshow(img, cmap="gray")
@@ -36,10 +36,20 @@ def ex5(img, bri, con):
     ax2.imshow(img2)
     #matplotlib.colors.Normalize(vmin=0, vmax=255)
     plt.show()
+def ex6(img, x, y, w, h):
+    result = img.copy()
+    result[y:y+h, x:x+w] = 255
+    plt.imshow(result)
+    plt.show()
+    return result
 
 
 if __name__ == '__main__':
     ex1()
     # ex2()
     (img1, img2) = ex4()
-    ex5(img1, 0, 1.2)
+    #ex5(img1, 0, 1.2)
+
+    ex6(img1,60,50,20,45)
+
+    ex5(img1,0,1.2)
