@@ -17,7 +17,17 @@ def ex3():
     plt.imshow(img, cmap="gray")
     plt.show()
 
+def ex4():
+    img1 = np.random.normal(loc=0,scale=50,size=(100,100))
+    fig,(ax1,ax2) = plt.subplots(1,2)
+    img = np.random.randint(0, 256, (100, 100), dtype=np.uint8)
+    ax1.imshow(img1)
+    ax2.imshow(img)
+    #plt.imshow(img, cmap="gray")
+    plt.show()
+    return (img,img1)
+
 if __name__ == '__main__':
     ex1()
     # ex2()
-    ex3()
+    ex4()
