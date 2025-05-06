@@ -36,6 +36,7 @@ def ex5(img, bri, con):
     ax2.imshow(img2)
     #matplotlib.colors.Normalize(vmin=0, vmax=255)
     plt.show()
+
 def ex6(img, x, y, w, h):
     result = img.copy()
     result[y:y+h, x:x+w] = 255
@@ -43,6 +44,11 @@ def ex6(img, x, y, w, h):
     plt.show()
     return result
 
+def ex8(img):
+    img = img.copy()
+    img = 255 - img
+    plt.imshow(img)
+    plt.show()
 
 if __name__ == '__main__':
     ex1()
@@ -50,6 +56,7 @@ if __name__ == '__main__':
     (img1, img2) = ex4()
     #ex5(img1, 0, 1.2)
 
-    ex6(img1,60,50,20,45)
+    img3 = ex6(img1,60,50,20,45)
 
     ex5(img1,0,1.2)
+    ex8(img3)
