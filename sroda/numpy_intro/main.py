@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
 
 def ex1():
     array2 = np.array([1,2,3,4],dtype=np.uint8)
@@ -19,15 +20,26 @@ def ex3():
 
 def ex4():
     img1 = np.random.normal(loc=0,scale=50,size=(100,100))
-    fig,(ax1,ax2) = plt.subplots(1,2)
-    img = np.random.randint(0, 256, (100, 100), dtype=np.uint8)
-    ax1.imshow(img1)
-    ax2.imshow(img)
+    #fig,(ax1,ax2) = plt.subplots(1,2)
+    img = np.random.randint(0, 256, (100, 100), dtype=np.uint16)
+    #ax1.imshow(img1)
+    #ax2.imshow(img)
     #plt.imshow(img, cmap="gray")
-    plt.show()
+    #plt.show()
     return (img,img1)
+
+def ex5(img, bri, con):
+    fig,(ax1,ax2) = plt.subplots(1,2)
+    img2 = np.clip((img+bri)*con, 0, 255)
+
+    ax1.imshow(img)
+    ax2.imshow(img2)
+    #matplotlib.colors.Normalize(vmin=0, vmax=255)
+    plt.show()
+
 
 if __name__ == '__main__':
     ex1()
     # ex2()
-    ex4()
+    (img1, img2) = ex4()
+    ex5(img1, 0, 1.2)
