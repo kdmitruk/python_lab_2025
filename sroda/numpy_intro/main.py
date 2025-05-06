@@ -12,6 +12,12 @@ def ex2():
     plt.imshow(img)
     plt.show()
 
+def ex3():
+    img = np.random.randint(0, 256, (100, 100), dtype=np.uint8)
+    plt.imshow(img, cmap="gray")
+    plt.show()
+
 if __name__ == '__main__':
     ex1()
-    ex2()
+    # ex2()
+    ex3()
