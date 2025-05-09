@@ -50,11 +50,16 @@ def ex8(img):
     img = 255 - img
     return img
 
+def ex9():
+    line = np.linspace(0, 255, SIZE[0], dtype=np.uint8)
+    img = np.tile(line, (SIZE[1], 1))
+    return img
+
 if __name__ == '__main__':
     img,_ = ex4(False)
     _,axes = plt.subplots(1,2)
     # axes[1].imshow(ex5(img,100,1.2), **IMSHOW_ARGS)
-    img_with_rect = ex7(img)
-    axes[0].imshow(img_with_rect, **IMSHOW_ARGS)
-    axes[1].imshow(ex8(img_with_rect), **IMSHOW_ARGS)
+    #img_with_rect = ex7(img)
+    axes[0].imshow(ex9(), **IMSHOW_ARGS)
+    #axes[1].imshow(ex8(img_with_rect), **IMSHOW_ARGS)
     plt.show()
