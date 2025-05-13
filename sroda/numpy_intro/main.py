@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
@@ -69,15 +71,23 @@ def ex7(img):
     plt.show()
     return img
 
+def ex10(freq):
+    x = np.linspace(0,2*np.pi*freq,100)
+    y = np.sin(x)
+    plt.figure()
+    plt.plot(x,y)
+    plt.show()
+
 if __name__ == '__main__':
     #ex1()
     # ex2()
-    (img1, img2) = ex4()
+    # (img1, img2) = ex4()
     #ex5(img1, 0, 1.2)
 
     # img3 = ex6(img1,60,50,20,45)
 
-    ex5(img1,-120,1.2)
+    # ex5(img1,-120,1.2)
     # ex8(img3)
     #img = ex9()
     #ex7(img)
+    ex10(5)
