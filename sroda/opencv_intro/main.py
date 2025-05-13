@@ -8,14 +8,20 @@ def ex1():
 def ex2():
     cam = cv2.VideoCapture(0)
     if cam is not None and cam.isOpened():
+        cv2.namedWindow("okno")
+        brightness = 0
+        slider = cv2.createTrackbar("jasnosc", "okno", 256, 256*2-1, lambda x:x)
         while True:
             ok, frame = cam.read()
             if not ok:
                 break
+            cv2.flip(frame, 1, frame)
+            brightness = cv2.getTrackbarPos("jasnosc", "okno") - 256
+            frame = cv2.add(frame, brightness)
             cv2.imshow("okno", frame)
-            key = cv2.waitKey(1)
-            if key & 0xFF == ord('q'):
+            if cv2.waitKey(1) == ord('q'):
                 break
+
 
 def main():
     ex2()
