@@ -25,11 +25,20 @@ class Viewer:
                 break
             cv2.flip(frame, 1, frame)
             value = self.get_slider_value()
-            # frame = cv2.add(frame, value)
             frame = self.process_frame(frame,value)
             cv2.imshow("okno", frame)
             if cv2.waitKey(1) == ord('q'):
                 break
+
+class BrightnessViewer(Viewer):
+    def __init__(self):
+        super().__init__("jasność", 256, 256*2-1)
+
+    def get_slider_value(self):
+        return super().get_slider_value() - 256
+
+    def process_frame(self, frame, value):
+        return cv2.add(frame, value)
 
 def ex1():
     img = cv2.imread("grzybek.png")
@@ -41,13 +50,13 @@ def ex2():
     if cam is not None and cam.isOpened():
         cv2.namedWindow("okno")
         brightness = 0
-        slider = cv2.createTrackbar("jasnosc", "okno", 256, 256*2-1, lambda x:x)
+        slider = cv2.createTrackbar("jasność", "okno", 256, 256*2-1, lambda x:x)
         while True:
             ok, frame = cam.read()
             if not ok:
                 break
             cv2.flip(frame, 1, frame)
-            brightness = cv2.getTrackbarPos("jasnosc", "okno") - 256
+            brightness = cv2.getTrackbarPos("jasność", "okno") - 256
             frame = cv2.add(frame, brightness)
             cv2.imshow("okno", frame)
             if cv2.waitKey(1) == ord('q'):
@@ -55,7 +64,8 @@ def ex2():
 
 
 def main():
-    viewer = Viewer("slider",0,255)
+    # viewer = Viewer("slider",0,255)
+    viewer = BrightnessViewer()
     viewer.run()
 
 
