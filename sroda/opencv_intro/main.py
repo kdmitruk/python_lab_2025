@@ -40,6 +40,17 @@ class BrightnessViewer(Viewer):
     def process_frame(self, frame, value):
         return cv2.add(frame, value)
 
+class GaussianViewer(Viewer):
+    def __init__(self):
+        super().__init__("gauss",0,50)
+
+    def get_slider_value(self):
+        return super().get_slider_value()*2+1
+
+    def process_frame(self, frame, value):
+        slider_value = self.get_slider_value()
+        return cv2.GaussianBlur(frame,(slider_value,slider_value),0)
+
 def ex1():
     img = cv2.imread("grzybek.png")
     cv2.imshow("okno", img)
@@ -65,7 +76,8 @@ def ex2():
 
 def main():
     # viewer = Viewer("slider",0,255)
-    viewer = BrightnessViewer()
+    # viewer = BrightnessViewer()
+    viewer = GaussianViewer()
     viewer.run()
 
 
