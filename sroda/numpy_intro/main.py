@@ -78,6 +78,30 @@ def ex10(freq):
     plt.plot(x,y)
     plt.show()
 
+def ex11(freq):
+    x = np.linspace(0,2*np.pi*freq,100)
+    xx,_ = np.meshgrid(x,x)
+    img = np.sin(xx)
+    plt.imshow(img)
+    plt.show()
+
+def ex12(freq):
+    x = np.linspace(0,2*np.pi*freq,100)
+    _,xx = np.meshgrid(x,x)
+    img = np.sin(xx)
+    plt.imshow(img)
+    plt.show()
+
+def ex13(freq):
+    x = np.linspace(0,2*np.pi*freq,512)
+    xx,yy = np.meshgrid(x,x)
+
+    img = np.sin(xx) + np.sin(yy)
+    plt.imshow(img, cmap="gray")
+    plt.show()
+
+
+
 if __name__ == '__main__':
     #ex1()
     # ex2()
@@ -90,4 +114,7 @@ if __name__ == '__main__':
     # ex8(img3)
     #img = ex9()
     #ex7(img)
-    ex10(5)
+    #ex10(5)
+    #ex11(5)
+    #ex12(5)
+    ex13(32)
