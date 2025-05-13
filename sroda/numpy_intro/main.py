@@ -25,7 +25,7 @@ def ex3():
 def ex4():
     img1 = np.random.normal(loc=0,scale=50,size=(100,100))
     #fig,(ax1,ax2) = plt.subplots(1,2)
-    img = np.random.randint(0, 256, (5, 5), dtype=np.uint8)
+    img = np.random.randint(0, 256, (512, 512), dtype=np.uint8)
     #ax1.imshow(img1)
     #ax2.imshow(img)
     #plt.imshow(img, cmap="gray")
@@ -97,15 +97,20 @@ def ex13(freq):
     xx,yy = np.meshgrid(x,x)
 
     img = np.sin(xx) + np.sin(yy)
-    plt.imshow(img, cmap="gray")
-    plt.show()
+    # plt.imshow(img, cmap="gray")
+    # plt.show()
+    return img
 
+def ex14(img, mask):
+    img = img.astype(np.float32) * mask.astype(np.float32)
+    plt.imshow(img)
+    plt.show()
 
 
 if __name__ == '__main__':
     #ex1()
     # ex2()
-    # (img1, img2) = ex4()
+    (img1, img2) = ex4()
     #ex5(img1, 0, 1.2)
 
     # img3 = ex6(img1,60,50,20,45)
@@ -117,4 +122,5 @@ if __name__ == '__main__':
     #ex10(5)
     #ex11(5)
     #ex12(5)
-    ex13(32)
+    #ex13(32)
+    ex14(img1, ex13(5))
