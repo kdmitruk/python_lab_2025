@@ -56,6 +56,7 @@ def ex9():
     line = np.linspace(0, 255, SIZE[0], dtype=np.uint8)
     img = np.tile(line, (SIZE[1], 1))
     return img
+
 def ex10():
     freq = 5
     x = np.linspace(0, math.pi * 2 * freq, 100)
@@ -71,12 +72,26 @@ def ex11():
     xx = np.sin(xx)
     return xx
 
+def ex12():
+    freq = 5
+    x = np.linspace(0, np.pi * 2 * freq, 100)
+    xx, yy = np.meshgrid(x, x)
+    yy = np.sin(yy)
+    return yy
+
+def ex13():
+    freq = 5
+    x = np.linspace(0, np.pi * 2 * freq, 100)
+    xx, yy = np.meshgrid(x, x)
+    xx = np.sin(xx)
+    yy = np.sin(yy)
+    return (xx+yy)*255+127
 
 if __name__ == '__main__':
     img,_ = ex4(False)
     _,axes = plt.subplots(1,2)
     # axes[1].imshow(ex5(img,100,1.2), **IMSHOW_ARGS)
     #img_with_rect = ex7(img)
-    axes[0].imshow(ex11())
+    axes[0].imshow(ex13(), **IMSHOW_ARGS)
     #axes[1].imshow(ex8(img_with_rect), **IMSHOW_ARGS)
     plt.show()
