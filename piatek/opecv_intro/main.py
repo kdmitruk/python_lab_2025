@@ -1,5 +1,5 @@
 import cv2
-from viewer import Viewer
+from viewer import *
 
 def ex1():
     img = cv2.imread("tekstura_grzybka.png")
@@ -29,5 +29,5 @@ def ex3():
             break
 
 if __name__ == '__main__':
-    viewer = Viewer(0,1)
+    viewer = BrightnessViewer()
     viewer.run()
