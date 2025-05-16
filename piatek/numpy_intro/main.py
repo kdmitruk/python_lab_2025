@@ -85,7 +85,10 @@ def ex13():
     xx, yy = np.meshgrid(x, x)
     xx = np.sin(xx)
     yy = np.sin(yy)
-    return (xx+yy)*255+127
+    return (xx+yy)*127+127
+
+def ex14(img, mask):
+    return img * mask
 
 if __name__ == '__main__':
     img,_ = ex4(False)
@@ -93,5 +96,5 @@ if __name__ == '__main__':
     # axes[1].imshow(ex5(img,100,1.2), **IMSHOW_ARGS)
     #img_with_rect = ex7(img)
     axes[0].imshow(ex13(), **IMSHOW_ARGS)
-    #axes[1].imshow(ex8(img_with_rect), **IMSHOW_ARGS)
+    axes[1].imshow(ex14(img, ex13()))
     plt.show()
