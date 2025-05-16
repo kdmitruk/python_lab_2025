@@ -29,5 +29,5 @@ def ex3():
             break
 
 if __name__ == '__main__':
-    viewer = MedianViewer()
+    viewer = HsvViewer()
     viewer.run()

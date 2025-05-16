@@ -59,3 +59,15 @@ class MedianViewer(Viewer):
     def process_frame(self, frame, trackbar_pos):
         return cv2.medianBlur(frame, trackbar_pos)
 
+
+class HsvViewer(Viewer):
+    def __init__(self):
+        super().__init__(0, 180)
+
+    def process_frame(self,frame,trackbar_pos):
+        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        h = hsv[:,:,0].astype(int)
+        h = (h + trackbar_pos) % 180
+        hsv[:,:,0] = h.astype(np.uint8)
+        return cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
+
