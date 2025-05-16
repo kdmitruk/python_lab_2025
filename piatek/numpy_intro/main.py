@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -54,8 +56,17 @@ def ex9():
     line = np.linspace(0, 255, SIZE[0], dtype=np.uint8)
     img = np.tile(line, (SIZE[1], 1))
     return img
+def ex10():
+    freq = 5
+    x = np.linspace(0, math.pi * 2 * freq, 100)
+    y = np.sin(x)
+    plt.figure()
+    plt.plot(x, y)
+    plt.show()
 
 if __name__ == '__main__':
+    ex10()
+    exit(0)
     img,_ = ex4(False)
     _,axes = plt.subplots(1,2)
     # axes[1].imshow(ex5(img,100,1.2), **IMSHOW_ARGS)

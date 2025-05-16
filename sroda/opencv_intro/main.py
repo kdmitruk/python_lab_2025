@@ -51,6 +51,17 @@ class GaussianViewer(Viewer):
         slider_value = self.get_slider_value()
         return cv2.GaussianBlur(frame,(slider_value,slider_value),0)
 
+class MedianViewer(Viewer):
+    def __init__(self):
+        super().__init__("median",0,50)
+
+    def get_slider_value(self):
+        return super().get_slider_value()*2+1
+
+    def process_frame(self, frame, value):
+        return cv2.medianBlur(frame,self.get_slider_value())
+
+
 def ex1():
     img = cv2.imread("grzybek.png")
     cv2.imshow("okno", img)
@@ -77,7 +88,7 @@ def ex2():
 def main():
     # viewer = Viewer("slider",0,255)
     # viewer = BrightnessViewer()
-    viewer = GaussianViewer()
+    viewer = MedianViewer()
     viewer.run()
 
 
