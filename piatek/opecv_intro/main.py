@@ -5,5 +5,15 @@ def ex1():
     cv2.imshow("", img)
     cv2.waitKey(0)
 
+def ex2():
+    capture = cv2.VideoCapture(0)
+    while True:
+        ret, frame = capture.read()
+        if not ret:
+            break
+        cv2.imshow('', frame)
+        if cv2.waitKey(1) == ord('q'):
+            break
+
 if __name__ == '__main__':
-    ex1()
+    ex2()
