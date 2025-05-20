@@ -61,6 +61,15 @@ class MedianViewer(Viewer):
     def process_frame(self, frame, value):
         return cv2.medianBlur(frame,self.get_slider_value())
 
+class HSVViewer(Viewer):
+    def __init__(self):
+        super().__init__("H", 0, 180)
+
+    def process_frame(self, frame, value):
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        hue = frame[:,:,0]
+        frame[:,:,0] = (hue + super().get_slider_value()) % 180
+        return cv2.cvtColor(frame, cv2.COLOR_HSV2BGR)
 
 def ex1():
     img = cv2.imread("grzybek.png")
@@ -88,7 +97,8 @@ def ex2():
 def main():
     # viewer = Viewer("slider",0,255)
     # viewer = BrightnessViewer()
-    viewer = MedianViewer()
+    # viewer = MedianViewer()
+    viewer = HSVViewer()
     viewer.run()
 
 
