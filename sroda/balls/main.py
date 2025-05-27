@@ -1,7 +1,17 @@
 from direct.showbase.ShowBase import ShowBase
-from panda3d.core import AmbientLight, DirectionalLight, LVector3, LineSegs
+from panda3d.core import AmbientLight, DirectionalLight, LVector3, LineSegs, Vec3
 
 TABLE_SIZE = 10
+
+class Ball:
+    def __init__(self,pos,color,render,loader):
+        self.pos = pos
+        self.color = color
+        node = loader.loadModel("models/sphere")
+        node.setScale(0.1)
+        node.reparentTo(render)
+
+
 class Game(ShowBase):
     def __init__(self):
         super().__init__()
@@ -9,6 +19,8 @@ class Game(ShowBase):
 
         self.camera.set_pos(0, -15, 12)
         self.camera.look_at(0, 0, 0)
+
+        ball = Ball(Vec3(0,0,0),(255,0,0,255),self.render,self.loader)
 
         ambient = AmbientLight('ambient')
         ambient.set_color((0.5, 0.5, 0.5, 1))
