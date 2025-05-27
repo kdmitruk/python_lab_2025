@@ -1,3 +1,5 @@
+import random
+
 from direct.showbase.ShowBase import ShowBase
 from panda3d.core import AmbientLight, DirectionalLight, LVector3, LineSegs, Vec3
 
@@ -9,6 +11,8 @@ class Ball:
         self.color = color
         node = loader.loadModel("models/sphere")
         node.setScale(0.1)
+        node.setPos(self.pos)
+        node.setColor(self.color)
         node.reparentTo(render)
 
 
@@ -20,7 +24,11 @@ class Game(ShowBase):
         self.camera.set_pos(0, -15, 12)
         self.camera.look_at(0, 0, 0)
 
-        ball = Ball(Vec3(0,0,0),(255,0,0,255),self.render,self.loader)
+        randpos = lambda: random.random()*TABLE_SIZE-TABLE_SIZE/2
+        balls = []
+        balls.append(Ball(Vec3(randpos(),randpos(),0),(1,0,0,1),self.render,self.loader))
+        balls.append(Ball(Vec3(randpos(),randpos(),0),(0,1,0,1),self.render,self.loader))
+        balls.append(Ball(Vec3(randpos(),randpos(),0),(0,0,1,1),self.render,self.loader))
 
         ambient = AmbientLight('ambient')
         ambient.set_color((0.5, 0.5, 0.5, 1))
