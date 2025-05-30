@@ -1,5 +1,5 @@
 from direct.showbase.ShowBase import ShowBase
-from panda3d.core import AmbientLight, DirectionalLight, LVector3, LineSegs
+from panda3d.core import AmbientLight, DirectionalLight, LVector3, LineSegs, Vec3, Vec4
 
 TS = 10
 
@@ -20,6 +20,7 @@ class Game(ShowBase):
         directional.set_direction(LVector3(-1, -1, -2))
         self.render.set_light(self.render.attach_new_node(directional))
         self.draw_bounds()
+        ball = Ball(Vec3(0,0,0),Vec4(1,0,0,1),self.render,self.loader)
 
     def draw_bounds(self):
         lines = LineSegs()
@@ -33,6 +34,14 @@ class Game(ShowBase):
         node = lines.create()
         self.render.attach_new_node(node)
 
+
+class Ball:
+    def __init__(self,pos,color,render,loader):
+        self.pos = pos
+        self.color = color
+        self.node = loader.load_model("sphere")
+        self.node.setScale(0.1)
+        self.node.reparent_to(render)
 
 
 
