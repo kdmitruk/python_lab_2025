@@ -1,0 +1,3 @@
+klucz1: asdasdw 
+klucz3: asd 
+klucz2: asd
