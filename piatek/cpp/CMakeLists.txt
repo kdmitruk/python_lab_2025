@@ -12,3 +12,5 @@ pybind11_add_module(operations operations.cpp)
 pybind11_add_module(templates templates.cpp)
 
 pybind11_add_module(average average.cpp)
+
+pybind11_add_module(point point.cpp)
